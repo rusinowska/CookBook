@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.ingredients'|trans }}
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="mdc-typography--headline4">{{ 'title.ingredients'|trans }}</h1>
+
+    {% if ingredients is defined and ingredients|length %}
+        <hr class="mdc-list-divider">
+        <ul class="mdc-list">
+            {% for item in ingredients %}
+                <li class="mdc-list-item">
+                    <div class="mdc-chip-set">
+                        <div class="mdc-chip" tabindex="0">
+                            <div class="mdc-chip__text">{{ item.name }}</div>
+                        </div>
+                    </div>
+                    <div class="mdc-list-item__meta" role="group" aria-label="{{ 'label.actions'|trans }}">
+                        <a href="{{ path('ingredients_view', {'id': item.id}) }}" class="mdc-button" title="{{ 'action.view'|trans }}">
+                            {{ 'action.view'|trans }}
+                        </a>
+                        <a href="{{ path('ingredients_edit', {'id': item.id}) }}" class="mdc-button" title="{{ 'action.edit'|trans }}">
+                            {{ 'action.edit'|trans }}
+                        </a>
+                        <a href="{{ path('ingredients_delete', {'id': item.id}) }}" class="mdc-button" title="{{ 'action.delete'|trans }}">
+                            {{ 'action.delete'|trans }}
+                        </a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <hr class="mdc-list-divider">
+
+        <div class="navigation text-center">
+            {{ pagerfanta(ingredients, 'twitter_bootstrap3_translated', { routeName: ('recipes_index_paginated') }) }}
+        </div>
+
+        <button class="mdc-button">
+            <i class="material-icons mdc-button__icon" aria-hidden="true">favorite</i>
+            Button
+        </button>
+
+    {% else %}
+        <p>
+            {{ 'message.empty_list'|trans }}
+        </p>
+    {% endif %}
+
+{% endblock %}

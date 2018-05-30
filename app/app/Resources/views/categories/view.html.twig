@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.categories'|trans }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'title.categories'|trans }}</h1>
+
+    {% if category is defined and category|length %}
+
+
+        <div class="mdc-chip-set">
+            <div class="mdc-chip" tabindex="0">
+                <div class="mdc-chip__text">{{ category.name }}</div>
+            </div>
+        </div>
+
+        <a href="{{ url('categories_index') }}" class="mdc-button">
+            <i class="material-icons mdc-button__icon" aria-hidden="true">keyboard_backspace</i>
+            all categories
+        </a>
+
+
+
+    {% else %}
+        <p>
+            {{ 'message.empty_list'|trans }}
+        </p>
+    {% endif %}
+
+{% endblock %}

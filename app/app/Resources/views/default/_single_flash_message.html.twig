@@ -1,0 +1,19 @@
+{#
+    Single flash message template.
+
+    parameters:
+        - type: Message type according to Bootstrap alert types,
+        - message: Message content,
+#}
+
+{# Bootstrap alert, see http://getbootstrap.com/components/#alerts #}
+<div class="mdc-snackbar mdc-snackbar--align-start alert-{{ type }}" aria-live="assertive" aria-atomic="true" aria-hidden="true" role="alert">
+    <div class="mdc-snackbar__text"></div>
+    <div class="mdc-snackbar__action-wrapper">
+        <button type="button" class="mdc-snackbar__action-button"></button>
+    </div>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+</div>

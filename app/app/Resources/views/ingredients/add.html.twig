@@ -1,0 +1,8 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.ingredient_add',
+    attr: {
+        method: 'post',
+        action: url('ingredients_add')
+    },
+    back_to_list_path: 'ingredients_index',
+} %}

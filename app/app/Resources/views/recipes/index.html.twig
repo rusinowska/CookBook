@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.recipes'|trans }}
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="mdc-typography--headline4">{{ 'title.recipes'|trans }}</h1>
+
+    {% if recipes is defined and recipes|length %}
+
+        <div class="mdc-grid-list">
+            <ul class="mdc-grid-list__tiles">
+                {% for recipe in recipes %}
+                    <li class="mdc-grid-tile">
+                        <div class="mdc-card">
+                            <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9">
+                            </div>
+
+                            <div class="cb-card__primary">
+                                <div class="cb__title mdc-typography--headline6">{{ recipe.title }}</div>
+                            </div>
+
+                            <div class="cb-card__secondary">
+                                <div class="mdc-chip-set">
+                                    <div class="mdc-chip" tabindex="0">
+                                        <div class="mdc-chip__text">Chip content</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mdc-card__actions">
+                                <div class="mdc-card__action-buttons">
+                                    <button class="mdc-button mdc-card__action mdc-card__action--button">View</button>
+                                </div>
+                                <div class="mdc-card__action-icons">
+                                    <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="Share">share</i>
+                                    <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="More options">more_vert</i>
+                                </div>
+                            </div>
+                        </div>
+                   </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="navigation text-center">
+            {{ pagerfanta(recipes, 'twitter_bootstrap3_translated', { routeName: ('recipes_index_paginated') }) }}
+        </div>
+
+        <button class="mdc-button">
+            <i class="material-icons mdc-button__icon" aria-hidden="true">favorite</i>
+            Button
+        </button>
+
+    {% else %}
+        <p>
+            {{ 'message.empty_list'|trans }}
+        </p>
+    {% endif %}
+
+{% endblock %}

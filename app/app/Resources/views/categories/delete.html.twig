@@ -1,0 +1,9 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.category_delete',
+    page_title_param: {'%id%': category.id},
+    attr: {
+        method: 'post',
+        action: url('categories_delete', {'id': category.id}),
+    },
+    back_to_list_path: 'categories_index',
+} %}

@@ -1,13 +1,116 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css">
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <style>
+
+        html, body{
+            margin: 0;
+        }
+        .my-card{
+            height: auto;
+            width: 350px;
+        }
+        .my-card__media {
+            background-image: url("https://images.unsplash.com/photo-1414235077428-338989a2e8c0?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=43d2818abd122c626a47a12ae53ca481&auto=format&fit=crop&w=1950&q=80");
+        }
+
+        .page__main-section{
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 1000px;
+        }
+
+        .cb-card__primary{
+            padding: 1rem;
+        }
+        .cb-card__secondary{
+            padding: 1rem;
+        }
+
+        .mdc-grid-tile{
+            --mdc-grid-list-tile-width: 300px;
+        }
+    </style>
+</head>
+<div class="mdc-typography">
+    <header class="mdc-top-app-bar">
+        <div class="mdc-top-app-bar__row">
+            <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                <a href="#" class="material-icons mdc-top-app-bar__navigation-icon menu">menu</a>
+                <span class="mdc-top-app-bar__title">CookBook</span>
+            </section>
+        </div>
+    </header>
+
+    <aside class="mdc-drawer mdc-drawer--persistent mdc-typography">
+        <nav class="mdc-drawer__drawer">
+            <header class="mdc-drawer__header">
+                <div class="mdc-drawer__header-content">
+                    Header here
+                </div>
+            </header>
+            <nav id="icon-with-text-demo" class="mdc-drawer__content mdc-list">
+                <a class="mdc-list-item mdc-list-item--activated" href="#">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">restaurant_menu</i>Recipes
+                </a>
+                <a class="mdc-list-item" href="#">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">local_florist</i>Ingredients
+                </a>
+                <a class="mdc-list-item" href="#">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">list</i>Categories
+                </a>
+                <a class="mdc-list-item" href="#">
+                    <i class="material-icons mdc-list-item__graphic" aria-hidden="true">settings</i>Settings
+                </a>
+            </nav>
+        </nav>
+    </aside>
+
+    <div>
+
+        {% include 'default/_flash_messages.html.twig' %}
+
+        <div class="page__main-section">
+
+            <div class="mdc-grid-list">
+                {% block body %}{% endblock %}
+            </div>
+        </div>
+
+    </div>
+
+
+    {% block javascripts %}{% endblock %}
+    <script>
+        import {MDCTopAppBar} from '@material/top-app-bar/index';
+        const MDCPersistentDrawer = mdc.drawer.MDCPersistentDrawer;
+        const MDCPersistentDrawerFoundation = mdc.drawer.MDCPersistentDrawerFoundation;
+        const util = mdc.drawer.util;
+
+        // Instantiation
+        const topAppBarElement = document.querySelector('.mdc-top-app-bar');
+        const topAppBar = new MDCTopAppBar(topAppBarElement);
+        const buttonRipple = new MDCRipple(document.querySelector('.mdc-button'));
+
+
+        var toolbar = mdc.toolbar.MDCToolbar.attachTo(document.querySelector('.mdc-toolbar'));
+        toolbar.fixedAdjustElement = document.querySelector('.mdc-toolbar-fixed-adjust');
+
+        let drawer = new mdc.drawer.MDCPersistentDrawer(document.querySelector('.mdc-drawer--persistent'));
+        document.querySelector('.menu').addEventListener('click', () => drawer.open = true);
+
+        mdc.ripple.MDCRipple.attachTo(document.querySelector('.foo-button'));
+        mdc.snackbar.MDCSnackbar.attachTo(document.querySelector('.mdc-snackbar'));
+
+    </script>
+    <script>mdc.autoInit()</script>
     </body>
 </html>

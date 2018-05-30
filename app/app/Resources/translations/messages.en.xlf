@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+
+            <trans-unit id="title.recipes">
+                <source>title.recipes</source>
+                <target>Recipes</target>
+            </trans-unit>
+            <trans-unit id="title.ingredients">
+                <source>title.ingredients</source>
+                <target>Ingredients</target>
+            </trans-unit>
+            <trans-unit id="title.categories">
+                <source>title.categories</source>
+                <target>Categories</target>
+            </trans-unit>
+            <trans-unit id="title.photos">
+                <source>title.photos</source>
+                <target>Photos</target>
+            </trans-unit>
+            <trans-unit id="title.users">
+                <source>title.users</source>
+                <target>users</target>
+            </trans-unit>
+
+
+            <trans-unit id="title.category_add">
+                <source>title.category_add</source>
+                <target>Add category</target>
+            </trans-unit>
+            <trans-unit id="title.recipe_add">
+                 <source>title.recipe_add</source>
+                 <target>Add recipe</target>
+            </trans-unit>
+            <trans-unit id="title.ingredient_add">
+                 <source>title.ingredient_add</source>
+                 <target>Add ingredient</target>
+            </trans-unit>
+
+            <trans-unit id="title.category_edit">
+                <source>title.category_edit</source>
+                <target>Edit category</target>
+            </trans-unit>
+            <trans-unit id="title.recipe_edit">
+                 <source>title.recipe_edit</source>
+                 <target>Edit recipe</target>
+            </trans-unit>
+            <trans-unit id="title.ingredient_edit">
+                 <source>title.ingredient_edit</source>
+                 <target>Edit ingredient</target>
+            </trans-unit>
+
+            <trans-unit id="title.category_delete">
+                <source>title.category_delete</source>
+                <target>Delete category</target>
+            </trans-unit>
+            <trans-unit id="title.recipe_delete">
+                 <source>title.recipe_delete</source>
+                 <target>Delete recipe</target>
+            </trans-unit>
+            <trans-unit id="title.ingredient_delete">
+                 <source>title.ingredient_delete</source>
+                 <target>Delete ingredient</target>
+            </trans-unit>
+
+            <trans-unit id="label.name">
+                  <source>label.name</source>
+                  <target>Name</target>
+            </trans-unit>
+            <trans-unit id="label.title">
+                  <source>label.title</source>
+                  <target>Title</target>
+            </trans-unit>
+            <trans-unit id="label.description">
+                  <source>label.description</source>
+                  <target>Description</target>
+            </trans-unit>
+            <trans-unit id="label.id">
+                  <source>label.id</source>
+                  <target>Id</target>
+            </trans-unit>
+            <trans-unit id="label.url">
+                  <source>label.url</source>
+                  <target>URL</target>
+            </trans-unit>
+            <trans-unit id="label.photo">
+                  <source>label.photo</source>
+                  <target>Photo</target>
+            </trans-unit>
+            <trans-unit id="label.category">
+                  <source>label.category</source>
+                  <target>Category</target>
+            </trans-unit>
+            <trans-unit id="label.ingredient">
+                  <source>label.ingredient</source>
+                  <target>Ingredient</target>
+            </trans-unit>
+
+            <trans-unit id="action.save">
+                  <source>action.save</source>
+                  <target>Save</target>
+            </trans-unit>
+            <trans-unit id="action.view">
+                  <source>action.view</source>
+                  <target>View</target>
+            </trans-unit>
+            <trans-unit id="action.edit">
+                  <source>action.edit</source>
+                  <target>Edit</target>
+            </trans-unit>
+            <trans-unit id="action.delete">
+                  <source>action.delete</source>
+                  <target>Delete</target>
+            </trans-unit>
+            <trans-unit id="action.back_to_list">
+                  <source>action.back_to_list</source>
+                  <target>Back to list</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
