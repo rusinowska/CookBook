@@ -1,0 +1,8 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.photo_add',
+    attr: {
+        method: 'post',
+        action: url('photos_add')
+    },
+    back_to_list_path: 'photos_index',
+} %}

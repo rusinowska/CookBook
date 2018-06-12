@@ -1,6 +1,6 @@
 <?php
 /**
- * Photo entity.
+ * Category entity.
  */
 namespace AppBundle\Entity;
 
@@ -10,19 +10,19 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Class Photo.
+ * Class Category.
  *
  * @ORM\Table(
- *     name="photos"
+ *     name="categories"
  * )
  * @ORM\Entity(
- *     repositoryClass="AppBundle\Repository\PhotosRepository"
+ *     repositoryClass="AppBundle\Repository\CategoriesRepository"
  * )
  * @UniqueEntity(
  *     fields={"name"}
  * )
  */
-class Photo
+class Category
 {
     /**
      * Use constants to define configuration options that rarely change instead
@@ -47,7 +47,6 @@ class Photo
      */
     protected $id;
 
-
     /**
      * Name.
      *
@@ -56,38 +55,17 @@ class Photo
      * @ORM\Column(
      *     name="name",
      *     type="string",
-     *     length=64,
+     *     length=128,
      *     nullable=false,
      * )
-     * @Assert\NotBlank(
-     *     groups={"photo-default", "photo-edit"}
+     *
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min="3",
+     *     max="128",
      * )
      */
     protected $name;
-
-    /**
-     * Filename.
-     *
-     * @var string $photo
-     *
-     * @ORM\Column(
-     *     name="photo",
-     *     type="string",
-     *     length=191,
-     *     nullable=false,
-     *     unique=true,
-     * )
-     * @Assert\NotBlank(
-     *     groups={"photo-default"},
-     * )
-     * @Assert\Image(
-     *     groups={"photo-default"},
-     *     maxSize = "1024k",
-     *     mimeTypes={"image/png", "image/jpeg", "image/pjpeg", "image/jpeg", "image/pjpeg"},
-     * )
-     */
-    protected $photo;
-
 
 
     /**
@@ -105,7 +83,7 @@ class Photo
      *
      * @param string $name
      *
-     * @return Photo
+     * @return Category
      */
     public function setName($name)
     {
@@ -128,67 +106,40 @@ class Photo
      */
     public function __construct()
     {
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
-
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Set photo
+     * Add category
      *
-     * @param string $photo
+     * @param \AppBundle\Entity\Category $category
      *
-     * @return Photo
+     * @return Tag
      */
-    public function setPhoto($photo)
+    public function addCategory(\AppBundle\Entity\Category $category)
     {
-        $this->photo = $photo;
+        $this->category[] = $category;
 
         return $this;
     }
 
     /**
-     * Get photo
+     * Remove category
      *
-     * @return string
+     * @param \AppBundle\Entity\Category $category
      */
-    public function getPhoto()
+    public function removeCategory(\AppBundle\Entity\Category $category)
     {
-        return $this->photo;
+        $this->categories->removeElement($category);
     }
 
-    //////
-//
-//    /**
-//     * Add photo
-//     *
-//     * @param \AppBundle\Entity\Photo $photo
-//     *
-//     * @return Photo
-//     */
-//    public function addPhoto(\AppBundle\Entity\Photo $photo)
-//    {
-//        $this->photo[] = $photo;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove photo
-//     *
-//     * @param \AppBundle\Entity\Photo $photo
-//     */
-//    public function removePhoto(\AppBundle\Entity\Photo $photo)
-//    {
-//        $this->photos->removeElement($photo);
-//    }
-
     /**
-     * Get photos
+     * Get categories
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getPhotos()
+    public function getCategories()
     {
-        return $this->photos;
+        return $this->categories;
     }
 }

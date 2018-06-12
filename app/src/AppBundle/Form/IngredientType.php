@@ -7,6 +7,7 @@ namespace AppBundle\Form;
 use AppBundle\Entity\Ingredient;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -35,6 +36,36 @@ class IngredientType extends AbstractType
                 ],
             ]
         );
+//        $builder->add(
+//            'quantity',
+//            TextType::class,
+//            [
+//                'label' => 'label.quantity',
+//                'required' => true,
+//                'attr' => [
+//                    'max_length' => 128,
+//                ],
+//            ]
+//        );
+//
+//        $builder->add(
+//            'unit',
+//            ChoiceType::class,
+//            [
+//                'label' => 'label.unit',
+//                'required' => true,
+//                'choices'  => array(
+//                    'x' => 'x',
+//                    'y' => 'y',
+//                    'z' => 'z',
+//                ),
+//                'attr' => [
+//                    'class' => 'dropdown-content'
+//                ],
+//            ]
+//        );
+
+
     }
 
     /**

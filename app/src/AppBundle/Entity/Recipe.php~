@@ -19,12 +19,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  *     repositoryClass="AppBundle\Repository\RecipesRepository"
  * )
  * @UniqueEntity(
- *     fields={"name"}
+ *     fields={"title"}
  * )
  */
 class Recipe
 {
-
     /**
      * Use constants to define configuration options that rarely change instead
      * of specifying them in app/config/config.yml.
@@ -66,7 +65,7 @@ class Recipe
      *     max="128",
      * )
      */
-    protected $name;
+    protected $title;
 
     /**
      * Description.
@@ -89,6 +88,43 @@ class Recipe
     protected $description;
 
     /**
+     * Ingredients.
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection $ingredients
+     *
+     * @ORM\ManyToMany(
+     *     targetEntity="Ingredient",
+     *     inversedBy="ingredients",
+     * )
+     * @ORM\JoinTable(
+     *     name="recipes_ingredients"
+     * )
+     */
+    protected $ingredients;
+
+    /**
+     * Category
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="Category",
+     *     mappedBy="category",
+     *     cascade={"persist", "remove"},
+     *     orphanRemoval=true
+     *     )
+     */
+    protected $category;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ingredients = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
      * Get id
      *
      * @return integer
@@ -99,34 +135,119 @@ class Recipe
     }
 
     /**
-     * Set name
+     * Set title
      *
-     * @param string $name
+     * @param string $title
      *
-     * @return Tag
+     * @return Recipe
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get name.
+     * Get title.
      *
      * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
     }
+
     /**
-     * Constructor
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Description
      */
-    public function __construct()
+    public function setDescription($description)
     {
-        $this->bookmarks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Add ingredient
+     *
+     * @param \AppBundle\Entity\Ingredient $ingredient
+     *
+     * @return Recipe
+     */
+    public function addIngredient(\AppBundle\Entity\Ingredient $ingredient)
+    {
+        $this->ingredients[] = $ingredient;
+
+        return $this;
+    }
+
+    /**
+     * Remove ingredient
+     *
+     * @param \AppBundle\Entity\Ingredient $ingredient
+     */
+    public function removeIngredient(\AppBundle\Entity\Ingredient $ingredient)
+    {
+        $this->ingredients->removeElement($ingredient);
+    }
+
+    /**
+     * Get ingredients.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIngredients()
+    {
+        return $this->ingredients;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Recipe
+     */
+    public function addCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \AppBundle\Entity\Category $category
+     */
+    public function removeCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->ingredients->removeElement($category);
+    }
+
+    /**
+     * Get categories.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 
     /**
@@ -136,7 +257,7 @@ class Recipe
      *
      * @return Tag
      */
-    public function addBookmark(\AppBundle\Entity\Recipe $recipe)
+    public function addRecipe(\AppBundle\Entity\Recipe $recipe)
     {
         $this->recipes[] = $recipe;
 
@@ -148,7 +269,7 @@ class Recipe
      *
      * @param \AppBundle\Entity\Recipe $recipe
      */
-    public function removeBookmark(\AppBundle\Entity\Recipe $recipe)
+    public function removeRecipe(\AppBundle\Entity\Recipe $recipe)
     {
         $this->recipes->removeElement($recipe);
     }
@@ -161,5 +282,15 @@ class Recipe
     public function getRecipes()
     {
         return $this->recipes;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

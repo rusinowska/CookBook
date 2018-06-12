@@ -1,19 +1,22 @@
 <?php
 /**
- * Category type.
+ * Photo type.
  */
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Category;
+use AppBundle\Entity\Photo;
+use AppBundle\Repository\PhotoRepository;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class CategoryType.
+ * Class PhotoType.
  */
-class CategoryType extends AbstractType
+class PhotoType extends AbstractType
 {
 
     /**
@@ -31,12 +34,16 @@ class CategoryType extends AbstractType
                 'label' => 'label.name',
                 'required' => true,
                 'attr' => [
-                    'max_length' => 128,
-                    'class' => 'mdc-text-field__input'
+                    'max_length' => 64,
                 ],
-                'label_attr' => [
-                    'class' => 'mdc-floating-label'
-                ],
+            ]
+        );
+        $builder->add(
+            'photo',
+            FileType::class,
+            [
+                'label' => 'label.photo',
+                'required' => true,
             ]
         );
     }
@@ -50,7 +57,7 @@ class CategoryType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => Category::class,
+                'data_class' => Photo::class,
             ]
         );
     }
@@ -62,6 +69,6 @@ class CategoryType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'category';
+        return 'photo';
     }
 }

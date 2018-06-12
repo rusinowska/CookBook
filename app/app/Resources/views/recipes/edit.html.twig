@@ -1,0 +1,9 @@
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.recipe_edit',
+    page_title_param: {'%id%': recipe.id},
+    attr: {
+        method: 'post',
+        action: url('recipes_edit', {'id': recipe.id}),
+    },
+    back_to_list_path: 'recipes_index',
+} %}

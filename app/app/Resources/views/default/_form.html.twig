@@ -6,9 +6,9 @@
 
 {% block body %}
 
-    <h1 class="mdc-typography--headline4">
+    <h3 class="mdc-typography--headline4">
         {% if page_title_param is defined %}{{ page_title|trans(page_title_param) }}{% else %}{{ page_title|trans }}{% endif %}
-    </h1>
+    </h3>
 
     {{ form_start(form, { method: attr.method|default('post'), action: attr.action }) }}
     {% if false == form.vars.valid %}
@@ -17,10 +17,13 @@
             message: 'message.form_error',
         }%}
     {% endif %}
+    <div class="">
+
     {{ form_widget(form) }}
+    </div>
 
     <div>
-        <input type="submit" value="{{ submit_label|default('action.save'|trans) }}" class="mdc-button" />
+        <input type="submit" value="{{ submit_label|default('action.save'|trans) }}" class="waves-effect waves-light btn" />
     </div>
 
 

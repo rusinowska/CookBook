@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.photos'|trans }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'title.photos'|trans }}</h1>
+
+    {% if photo is defined and photo|length %}
+
+        <li class="mdc-grid-tile">
+            <div class="mdc-card">
+                <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9">
+                </div>
+
+                <div class="cb-card__primary">
+                    <div class="cb__title mdc-typography--headline6">{{ photo.title }}</div>
+                </div>
+
+                <img class="photos" src="{{  asset('uploads/photos/' ~ item.photo) }}" alt="{{ item.name }}">
+
+                <div class="mdc-card__actions">
+                    <div class="mdc-card__action-buttons">
+                        <button class="mdc-button mdc-card__action mdc-card__action--button">View</button>
+                    </div>
+                    <div class="mdc-card__action-icons">
+                        <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="Share">share</i>
+                        <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="More options">more_vert</i>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+
+
+    {% else %}
+        <p>
+            {{ 'message.empty_list'|trans }}
+        </p>
+    {% endif %}
+
+{% endblock %}

@@ -67,6 +67,62 @@ class Recipe
      */
     protected $title;
 
+    /**
+     * Description.
+     *
+     * @var string $description
+     *
+     * @ORM\Column(
+     *     name="description",
+     *     type="string",
+     *     length=500,
+     *     nullable=false,
+     * )
+     *
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min="3",
+     *     max="500",
+     * )
+     */
+    protected $description;
+
+    /**
+     * Ingredients.
+     *
+     * @var \Doctrine\Common\Collections\ArrayCollection $ingredients
+     *
+     * @ORM\ManyToMany(
+     *     targetEntity="Ingredient",
+     *     inversedBy="ingredients",
+     * )
+     * @ORM\JoinTable(
+     *     name="recipes_ingredients"
+     * )
+     */
+    protected $ingredients;
+
+    /**
+     * Category
+     *
+     * @ORM\OneToMany(
+     *     targetEntity="Category",
+     *     mappedBy="category",
+     *     cascade={"persist", "remove"},
+     *     orphanRemoval=true
+     *     )
+     */
+    protected $category;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ingredients = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -101,12 +157,97 @@ class Recipe
     {
         return $this->title;
     }
+
     /**
-     * Constructor
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Description
      */
-    public function __construct()
+    public function setDescription($description)
     {
-        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description.
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Add ingredient
+     *
+     * @param \AppBundle\Entity\Ingredient $ingredient
+     *
+     * @return Recipe
+     */
+    public function addIngredient(\AppBundle\Entity\Ingredient $ingredient)
+    {
+        $this->ingredients[] = $ingredient;
+
+        return $this;
+    }
+
+    /**
+     * Remove ingredient
+     *
+     * @param \AppBundle\Entity\Ingredient $ingredient
+     */
+    public function removeIngredient(\AppBundle\Entity\Ingredient $ingredient)
+    {
+        $this->ingredients->removeElement($ingredient);
+    }
+
+    /**
+     * Get ingredients.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIngredients()
+    {
+        return $this->ingredients;
+    }
+
+    /**
+     * Add category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Recipe
+     */
+    public function addCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param \AppBundle\Entity\Category $category
+     */
+    public function removeCategory(\AppBundle\Entity\Category $category)
+    {
+        $this->ingredients->removeElement($category);
+    }
+
+    /**
+     * Get categories.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategories()
+    {
+        return $this->categories;
     }
 
     /**
@@ -141,5 +282,15 @@ class Recipe
     public function getRecipes()
     {
         return $this->recipes;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 }

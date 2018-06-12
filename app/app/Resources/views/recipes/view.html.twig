@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.recipes'|trans }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'title.recipes'|trans }}</h1>
+
+    {% if recipe is defined and recipe|length %}
+
+        <li class="mdc-grid-tile">
+            <div class="mdc-card">
+                <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9">
+                </div>
+
+                <div class="cb-card__primary">
+                    <div class="cb__title mdc-typography--headline6">{{ recipe.title }}</div>
+                </div>
+
+                <div class="cb-card__secondary">
+                    <div class="mdc-typography--body2">{{ recipe.description }}</div>
+                    <div class="mdc-chip-set">
+                        {% for ingredient in ingredients %}
+                            <div class="mdc-chip" tabindex="0">
+                                <div class="mdc-chip__text">{{ ingredient }}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {#{% for key, value in recipe.category %}#}
+                    {#<div class="mdc-typography--body2">{{ value }}</div>#}
+                    {#{% endfor %}#}
+                </div>
+
+                <div class="mdc-card__actions">
+                    <div class="mdc-card__action-buttons">
+                        <button class="mdc-button mdc-card__action mdc-card__action--button">View</button>
+                    </div>
+                    <div class="mdc-card__action-icons">
+                        <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="Share">share</i>
+                        <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="More options">more_vert</i>
+                    </div>
+                </div>
+            </div>
+        </li>
+
+
+
+    {% else %}
+        <p>
+            {{ 'message.empty_list'|trans }}
+        </p>
+    {% endif %}
+
+{% endblock %}

@@ -64,7 +64,7 @@ class PhotosRepository extends EntityRepository
      *
      * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function save($photo $photo)
+    public function save($photo)
     {
         $this->_em->persist($photo);
         $this->_em->flush($photo);
