@@ -59,6 +59,27 @@
         [type="checkbox"]:not(:checked), [type="checkbox"]:checked {
             opacity: 1;
         }
+
+        nav {
+            color: #fff;
+            background-color: #9ccc65;
+        }
+
+        .sidenav .user-view {
+            position: relative;
+            padding: 84px 32px 32px 32px;
+            margin-bottom: 8px;
+        }
+        .nav-actions-list {
+            margin: 2.8rem 0 1.68rem 0;
+        }
+
+        .mdc-button--raised:not(:disabled), .mdc-button--unelevated:not(:disabled) {
+            background-color: var(--mdc-theme-primary,##9ccc65);
+            background-color: #6b9b37;
+        }
+
+
     </style>
 </head>
 <div class="mdc-typography">
@@ -74,12 +95,10 @@
     <nav>
         <div class="nav-wrapper">
             <a href="#" data-target="slide-out" class="left sidenav-trigger"><i class="material-icons">menu</i></a>
-            <a href="#!" class="brand-logo">CookBook</a>
+            <a href="{{ path('recipes_index') }}" class="brand-logo">CookBook</a>
             <ul class="right hide-on-med-and-down">
                 <li><a href="sass.html"><i class="material-icons">search</i></a></li>
-                <li><a href="badges.html"><i class="material-icons">view_module</i></a></li>
-                <li><a href="collapsible.html"><i class="material-icons">refresh</i></a></li>
-                <li><a href="mobile.html"><i class="material-icons">more_vert</i></a></li>
+                <li><a href="badges.html"><i class="material-icons">input</i></a></li>
             </ul>
         </div>
     </nav>
@@ -88,15 +107,14 @@
     <ul id="slide-out" class="sidenav">
         <li><div class="user-view">
                 <div class="background">
-                    <img src="https://images.unsplash.com/photo-1505685679686-2490cab6217d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=48e9bdbabfe5f643f58e43dd81f9677e&auto=format&fit=crop&w=2850&q=80" style="width: 100%;">
+                    <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=4fa061122a5ce899fcb5454dae8dbe99&auto=format&fit=crop&w=1950&q=80" style="width: 100%;">
                 </div>
-                <a href="#user"><img class="circle" src="https://images.unsplash.com/photo-1505685679686-2490cab6217d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=48e9bdbabfe5f643f58e43dd81f9677e&auto=format&fit=crop&w=2850&q=80"></a>
                 <a href="#name"><span class="white-text name">John Doe</span></a>
-                <a href="#email"><span class="white-text email">jdandturk@gmail.com</span></a>
             </div></li>
-        <li><a href="#!"><i class="material-icons">restaurant_menu</i>Recipes</a></li>
-        <li><a href="#!"><i class="material-icons">local_florist</i>Ingredients</a></li>
-        <li><a href="#!"><i class="material-icons">list</i>Categories</a></li>
+        <li><a href="{{ path('recipes_index') }}"><i class="material-icons">restaurant_menu</i>Recipes</a></li>
+        <li><a href="{{ path('ingredients_index') }}"><i class="material-icons">local_florist</i>Ingredients</a></li>
+        <li><a href="{{ path('categories_index') }}"><i class="material-icons">list</i>Categories</a></li>
+        <li><a href="{{ path('photos_index') }}"><i class="material-icons">insert_photo</i>Photos</a></li>
         <li><div class="divider"></div></li>
         <li><a class="subheader">Settings</a></li>
         <li><a class="waves-effect" href="#!"><i class="material-icons">settings</i>Settings</a></li>

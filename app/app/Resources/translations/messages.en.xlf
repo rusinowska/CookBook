@@ -117,6 +117,11 @@
                   <source>action.back_to_list</source>
                   <target>Back to list</target>
             </trans-unit>
+
+            <trans-unit id="message.empty_list">
+                  <source>message.empty_list</source>
+                  <target>Looks like this list is empty :(</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

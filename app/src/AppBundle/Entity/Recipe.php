@@ -74,7 +74,7 @@ class Recipe
      *
      * @ORM\Column(
      *     name="description",
-     *     type="string",
+     *     type="text",
      *     length=500,
      *     nullable=false,
      * )
@@ -82,10 +82,25 @@ class Recipe
      * @Assert\NotBlank
      * @Assert\Length(
      *     min="3",
-     *     max="500",
+     *     max="10000",
      * )
      */
     protected $description;
+
+    /**
+     * Category
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="Category",
+     *     inversedBy="recipes"
+     * )
+     *
+     * @ORM\JoinColumn(
+     *     name="category_id",
+     *     referencedColumnName="id",
+     *     onDelete="CASCADE")
+     */
+    private $category;
 
     /**
      * Ingredients.
@@ -94,7 +109,7 @@ class Recipe
      *
      * @ORM\ManyToMany(
      *     targetEntity="Ingredient",
-     *     inversedBy="ingredients",
+     *     inversedBy="recipes",
      * )
      * @ORM\JoinTable(
      *     name="recipes_ingredients"
@@ -103,25 +118,44 @@ class Recipe
     protected $ingredients;
 
     /**
-     * Category
+     * Photo
      *
      * @ORM\OneToMany(
-     *     targetEntity="Category",
-     *     mappedBy="category",
+     *     targetEntity="Photo",
+     *     mappedBy="recipes",
      *     cascade={"persist", "remove"},
      *     orphanRemoval=true
      *     )
      */
-    protected $category;
+    protected $photos;
+
+
+//    /**
+//     * Photo.
+//     *
+//     * @var \Doctrine\Common\Collections\ArrayCollection $photos
+//     *
+//     * @ORM\ManyToMany(
+//     *     targetEntity="Photo",
+//     *     inversedBy="photo",
+//     *     mappedBy="recipe",
+//     * )
+//     * @ORM\JoinTable(
+//     *     name="recipes_photos"
+//     * )
+//     */
+
+
+
+
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
         $this->ingredients = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -149,7 +183,7 @@ class Recipe
     }
 
     /**
-     * Get title.
+     * Get title
      *
      * @return string
      */
@@ -163,7 +197,7 @@ class Recipe
      *
      * @param string $description
      *
-     * @return Description
+     * @return Recipe
      */
     public function setDescription($description)
     {
@@ -173,13 +207,37 @@ class Recipe
     }
 
     /**
-     * Get description.
+     * Get description
      *
      * @return string
      */
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return Recipe
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->category;
     }
 
     /**
@@ -207,7 +265,7 @@ class Recipe
     }
 
     /**
-     * Get ingredients.
+     * Get ingredients
      *
      * @return \Doctrine\Common\Collections\Collection
      */
@@ -217,80 +275,36 @@ class Recipe
     }
 
     /**
-     * Add category
+     * Add photo
      *
-     * @param \AppBundle\Entity\Category $category
+     * @param \AppBundle\Entity\Photo $photo
      *
      * @return Recipe
      */
-    public function addCategory(\AppBundle\Entity\Category $category)
+    public function addPhoto(\AppBundle\Entity\Photo $photo)
     {
-        $this->category = $category;
+        $this->photos[] = $photo;
 
         return $this;
     }
 
     /**
-     * Remove category
+     * Remove photo
      *
-     * @param \AppBundle\Entity\Category $category
+     * @param \AppBundle\Entity\Photo $photo
      */
-    public function removeCategory(\AppBundle\Entity\Category $category)
+    public function removePhoto(\AppBundle\Entity\Photo $photo)
     {
-        $this->ingredients->removeElement($category);
+        $this->photos->removeElement($photo);
     }
 
     /**
-     * Get categories.
+     * Get photos
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCategories()
+    public function getPhotos()
     {
-        return $this->categories;
-    }
-
-    /**
-     * Add recipe
-     *
-     * @param \AppBundle\Entity\Recipe $recipe
-     *
-     * @return Tag
-     */
-    public function addRecipe(\AppBundle\Entity\Recipe $recipe)
-    {
-        $this->recipes[] = $recipe;
-
-        return $this;
-    }
-
-    /**
-     * Remove recipe
-     *
-     * @param \AppBundle\Entity\Recipe $recipe
-     */
-    public function removeRecipe(\AppBundle\Entity\Recipe $recipe)
-    {
-        $this->recipes->removeElement($recipe);
-    }
-
-    /**
-     * Get recipes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getRecipes()
-    {
-        return $this->recipes;
-    }
-
-    /**
-     * Get category
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getCategory()
-    {
-        return $this->category;
+        return $this->photos;
     }
 }

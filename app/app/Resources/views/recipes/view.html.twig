@@ -6,25 +6,21 @@
 
 {% block body %}
 
-    <h1>{{ 'title.recipes'|trans }}</h1>
+
 
     {% if recipe is defined and recipe|length %}
 
         <li class="mdc-grid-tile">
-            <div class="mdc-card">
-                <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9">
-                </div>
 
-                <div class="cb-card__primary">
-                    <div class="cb__title mdc-typography--headline6">{{ recipe.title }}</div>
-                </div>
+            <h1 class="mdc-typography--headline4">{{ recipe.title }}</h1>
 
                 <div class="cb-card__secondary">
+                    <div class="mdc-typography--body2">CATEGORY: {{ category.name }}</div>
                     <div class="mdc-typography--body2">{{ recipe.description }}</div>
                     <div class="mdc-chip-set">
                         {% for ingredient in ingredients %}
                             <div class="mdc-chip" tabindex="0">
-                                <div class="mdc-chip__text">{{ ingredient }}</div>
+                                <div class="mdc-chip__text">{{ ingredient.name }}</div>
                             </div>
                         {% endfor %}
                     </div>
@@ -42,7 +38,7 @@
                         <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="More options">more_vert</i>
                     </div>
                 </div>
-            </div>
+
         </li>
 
 

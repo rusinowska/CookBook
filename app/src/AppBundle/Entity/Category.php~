@@ -67,6 +67,23 @@ class Category
      */
     protected $name;
 
+    /**
+     * @ORM\OneToMany(
+     *     targetEntity="Recipe",
+     *     mappedBy="category")
+     */
+    private $recipes;
+
+
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -93,7 +110,7 @@ class Category
     }
 
     /**
-     * Get name.
+     * Get name
      *
      * @return string
      */
@@ -101,45 +118,38 @@ class Category
     {
         return $this->name;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->categories = new \Doctrine\Common\Collections\ArrayCollection();
-    }
 
     /**
-     * Add category
+     * Add recipe
      *
-     * @param \AppBundle\Entity\Category $category
+     * @param \AppBundle\Entity\Recipe $recipe
      *
-     * @return Tag
+     * @return Category
      */
-    public function addCategory(\AppBundle\Entity\Category $category)
+    public function addRecipe(\AppBundle\Entity\Recipe $recipe)
     {
-        $this->category[] = $category;
+        $this->recipes[] = $recipe;
 
         return $this;
     }
 
     /**
-     * Remove category
+     * Remove recipe
      *
-     * @param \AppBundle\Entity\Category $category
+     * @param \AppBundle\Entity\Recipe $recipe
      */
-    public function removeCategory(\AppBundle\Entity\Category $category)
+    public function removeRecipe(\AppBundle\Entity\Recipe $recipe)
     {
-        $this->categories->removeElement($category);
+        $this->recipes->removeElement($recipe);
     }
 
     /**
-     * Get categories
+     * Get recipes
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCategories()
+    public function getRecipes()
     {
-        return $this->categories;
+        return $this->recipes;
     }
 }

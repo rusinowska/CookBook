@@ -38,7 +38,7 @@ class Ingredient
      *
      * @ORM\ManyToMany(
      *     targetEntity="Recipe",
-     *     mappedBy="recipes",
+     *     mappedBy="ingredients",
      * )
      */
     protected $recipes;
@@ -119,6 +119,38 @@ class Ingredient
 //     */
 //    protected $unit;
 
+//    /**
+//     * Set quantity
+//     *
+//     * @param string $quantity
+//     *
+//     * @return Ingredient
+//     */
+//    public function setQuantity($quantity)
+//    {
+//        $this->quantity = $quantity;
+//
+//        return $this;
+//    }
+
+//    /**
+//     * Get quantity.
+//     *
+//     * @return string
+//     */
+//    public function getQuantity()
+//    {
+//        return $this->quantity;
+//    }
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -144,81 +176,14 @@ class Ingredient
         return $this;
     }
 
-//    /**
-//     * Set quantity
-//     *
-//     * @param string $quantity
-//     *
-//     * @return Ingredient
-//     */
-//    public function setQuantity($quantity)
-//    {
-//        $this->quantity = $quantity;
-//
-//        return $this;
-//    }
-
-//    /**
-//     * Get quantity.
-//     *
-//     * @return string
-//     */
-//    public function getQuantity()
-//    {
-//        return $this->quantity;
-//    }
-
     /**
-     * Get name.
+     * Get name
      *
      * @return string
      */
     public function getName()
     {
         return $this->name;
-    }
-
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->ingredients = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add ingredient
-     *
-     * @param \AppBundle\Entity\Ingredient $ingredient
-     *
-     * @return Ingredient
-     */
-    public function addIngredient(\AppBundle\Entity\Ingredient $ingredient)
-    {
-        $this->ingredient[] = $ingredient;
-
-        return $this;
-    }
-
-    /**
-     * Remove ingredient
-     *
-     * @param \AppBundle\Entity\Ingredient $ingredient
-     */
-    public function removeIngredient(\AppBundle\Entity\Ingredient $ingredient)
-    {
-        $this->ingredients->removeElement($ingredient);
-    }
-
-    /**
-     * Get ingredients
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIngredients()
-    {
-        return $this->ingredients;
     }
 
     /**

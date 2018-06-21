@@ -6,15 +6,17 @@ namespace AppBundle\Controller;
 
 
 use AppBundle\Entity\Recipe;
+use AppBundle\Entity\Photo;
 use AppBundle\Form\RecipeType;
 use AppBundle\Repository\RecipesRepository;
 use AppBundle\Repository\IngredientsRepository;
 use AppBundle\Repository\CategoriesRepository;
-//use AppBundle\Repository\PhotosRepository;
+use AppBundle\Repository\PhotosRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -60,13 +62,14 @@ class RecipesController extends Controller
      * @param \AppBundle\Repository\RecipesRepository $recipesRepository Recipes repository
      * @param \AppBundle\Repository\RecipesRepository $ingredientsRepository Ingredients repository
      * @param \AppBundle\Repository\RecipesRepository $categoriesRepository Categories repository
+     * @param \AppBundle\Repository\RecipesRepository $photosRepository Photos repository
      */
-    public function __construct(RecipesRepository $recipesRepository, IngredientsRepository $ingredientsRepository, CategoriesRepository $categoriesRepository)
+    public function __construct(RecipesRepository $recipesRepository, IngredientsRepository $ingredientsRepository, CategoriesRepository $categoriesRepository, PhotosRepository $photosRepository)
     {
         $this->recipesRepository = $recipesRepository;
         $this->ingredientsRepository = $ingredientsRepository;
         $this->categoriesRepository = $categoriesRepository;
-        //$this->photosRepository = $photosRepository;
+        $this->photosRepository = $photosRepository;
     }
 
     /**
@@ -117,11 +120,16 @@ class RecipesController extends Controller
     public function viewAction(Recipe $recipe)
     {
         $ingredients = $recipe->getIngredients();
+        $category = $recipe->getCategory();
+        $photos = $recipe->getPhotos();
+
         return $this->render(
             'recipes/view.html.twig',
             [
                 'recipe' => $recipe,
-                'ingredients' => $ingredients
+                'category' => $category,
+                'ingredients' => $ingredients,
+                'photos' => $photos,
             ]
         );
     }
@@ -144,6 +152,9 @@ class RecipesController extends Controller
     public function addAction(Request $request)
     {
         $recipe = new Recipe();
+
+        $photo = new Photo();
+        $recipe->addPhoto($photo);
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 

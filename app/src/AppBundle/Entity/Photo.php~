@@ -31,6 +31,7 @@ class Photo
      */
     const NUM_ITEMS = 10;
 
+
     /**
      * Primary key.
      *
@@ -89,72 +90,21 @@ class Photo
     protected $photo;
 
 
-
     /**
-     * Get id
+     * Recipes
      *
-     * @return integer
+     * @ORM\ManyToOne(
+     *     targetEntity="Recipe",
+     *     inversedBy="photos"
+     * )
+     * @ORM\JoinColumn(
+     *     name="recipe_id",
+     *     referencedColumnName="id"
+     * )
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    protected $recipes;
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Photo
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
 
-        return $this;
-    }
-
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
-
-    }
-
-    /**
-     * Set photo
-     *
-     * @param string $photo
-     *
-     * @return Photo
-     */
-    public function setPhoto($photo)
-    {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    /**
-     * Get photo
-     *
-     * @return string
-     */
-    public function getPhoto()
-    {
-        return $this->photo;
-    }
 
     //////
 //
@@ -182,13 +132,87 @@ class Photo
 //        $this->photos->removeElement($photo);
 //    }
 
+
+
     /**
-     * Get photos
+     * Get id
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return integer
      */
-    public function getPhotos()
+    public function getId()
     {
-        return $this->photos;
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Photo
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param string $photo
+     *
+     * @return Photo
+     */
+    public function setPhoto($photo)
+    {
+        $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return string
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Set recipes
+     *
+     * @param \AppBundle\Entity\Recipe $recipes
+     *
+     * @return Photo
+     */
+    public function setRecipes(\AppBundle\Entity\Recipe $recipes = null)
+    {
+        $this->recipes = $recipes;
+
+        return $this;
+    }
+
+    /**
+     * Get recipes
+     *
+     * @return \AppBundle\Entity\Recipe
+     */
+    public function getRecipes()
+    {
+        return $this->recipes;
     }
 }

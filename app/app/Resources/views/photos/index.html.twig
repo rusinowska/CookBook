@@ -15,7 +15,7 @@
                 {% for item in photos %}
                     <li class="mdc-grid-tile">
                         <div class="mdc-card">
-                            <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9" style="background-image: url({{  asset('uploads/photos/' ~ item.photo) }});">
+                            <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9" style="background-image: url({{   asset('uploads/photos/' ~ item.photo) }});">
                             </div>
 
                             <div class="cb-card__primary">
@@ -26,11 +26,8 @@
                                 <div class="mdc-card__action-buttons">
                                     <button class="mdc-button mdc-card__action mdc-card__action--button">View</button>
                                 </div>
-                                <div class="mdc-card__action-icons">
-                                    <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="Share">share</i>
-                                    <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="More options">more_vert</i>
-                                </div>
                             </div>
+
                         </div>
                    </li>
                 {% endfor %}

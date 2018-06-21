@@ -7,9 +7,13 @@ namespace AppBundle\Form;
 use AppBundle\Entity\Recipe;
 use AppBundle\Entity\Ingredient;
 use AppBundle\Entity\Category;
+use AppBundle\Form\PhotoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -41,13 +45,13 @@ class RecipeType extends AbstractType
         );
         $builder->add(
             'description',
-            TextType::class,
+            TextareaType::class,
             [
                 'label' => 'label.description',
                 'required' => true,
                 'attr' => [
-                    'max_length' => 500,
-                    'class' => 'input-field'
+                    'max_length' => 10000,
+                    'class' => 'materialize-textarea'
                 ],
             ]
         );
@@ -66,7 +70,7 @@ class RecipeType extends AbstractType
             ]
         );
         $builder->add(
-            'categories',
+            'category',
             EntityType::class,
             [
                 'class' => Category::class,
@@ -79,6 +83,16 @@ class RecipeType extends AbstractType
                 'multiple' => false,
             ]
         );
+
+        $builder->add(
+            'photos',
+            CollectionType::class,
+            array(
+                'entry_type' => PhotoType::class,
+                'entry_options' => array('label' => false),
+                'allow_add' => true,
+        ));
+
     }
 
     /**

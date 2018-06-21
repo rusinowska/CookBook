@@ -6,7 +6,17 @@
 
 {% block body %}
 
-    <h1 class="mdc-typography--headline4">{{ 'title.categories'|trans }}</h1>
+    <div class="row">
+        <div class="col s6">
+            <h1 class="mdc-typography--headline4">{{ 'title.categories'|trans }}</h1>
+        </div>
+        <div class="col s6 nav-actions-list">
+            <a href="{{ path('categories_add') }}" class="mdc-button mdc-button--raised right">
+                <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
+                add new
+            </a>
+        </div>
+    </div>
 
     {% if categories is defined and categories|length %}
         <hr class="mdc-list-divider">

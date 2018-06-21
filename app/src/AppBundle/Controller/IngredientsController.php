@@ -186,7 +186,7 @@ class IngredientsController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->cingredientsRepository->delete($ingredient);
+            $this->ingredientsRepository->delete($ingredient);
             $this->addFlash('success', 'message.deleted_successfully');
 
             return $this->redirectToRoute('ingredients_index');
