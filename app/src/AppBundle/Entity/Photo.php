@@ -90,16 +90,28 @@ class Photo
     protected $photo;
 
 
+//    /**
+//     * Recipes
+//     *
+//     * @ORM\ManyToOne(
+//     *     targetEntity="Recipe",
+//     *     inversedBy="photos"
+//     * )
+//     * @ORM\JoinColumn(
+//     *     name="recipe_id",
+//     *     referencedColumnName="id",
+//     * )
+//     */
+//    protected $recipes;
+
     /**
-     * Recipes
+     * Recipes.
      *
-     * @ORM\ManyToOne(
+     * @var \Doctrine\Common\Collections\ArrayCollection $recipes
+     *
+     * @ORM\ManyToMany(
      *     targetEntity="Recipe",
-     *     inversedBy="photos"
-     * )
-     * @ORM\JoinColumn(
-     *     name="recipe_id",
-     *     referencedColumnName="id"
+     *     mappedBy="photos",
      * )
      */
     protected $recipes;
@@ -133,6 +145,16 @@ class Photo
 //    }
 
 
+
+
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->recipes = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -193,23 +215,33 @@ class Photo
     }
 
     /**
-     * Set recipes
+     * Add recipe
      *
-     * @param \AppBundle\Entity\Recipe $recipes
+     * @param \AppBundle\Entity\Recipe $recipe
      *
      * @return Photo
      */
-    public function setRecipes(\AppBundle\Entity\Recipe $recipes = null)
+    public function addRecipe(\AppBundle\Entity\Recipe $recipe)
     {
-        $this->recipes = $recipes;
+        $this->recipes[] = $recipe;
 
         return $this;
     }
 
     /**
+     * Remove recipe
+     *
+     * @param \AppBundle\Entity\Recipe $recipe
+     */
+    public function removeRecipe(\AppBundle\Entity\Recipe $recipe)
+    {
+        $this->recipes->removeElement($recipe);
+    }
+
+    /**
      * Get recipes
      *
-     * @return \AppBundle\Entity\Recipe
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getRecipes()
     {

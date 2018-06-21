@@ -11,15 +11,15 @@
     {% if photo is defined and photo|length %}
 
         <li class="mdc-grid-tile">
-            <div class="mdc-card">
+
                 <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9">
                 </div>
 
                 <div class="cb-card__primary">
-                    <div class="cb__title mdc-typography--headline6">{{ photo.title }}</div>
+                    <div class="cb__title mdc-typography--headline6">{{ photo.name }}</div>
                 </div>
 
-                <img class="photos" src="{{  asset('uploads/photos/' ~ item.photo) }}" alt="{{ item.name }}">
+                <img class="photos" src="{{  asset('uploads/photos/' ~ photo.photo) }}" alt="{{ photo.name }}" style="max-width: 600px;">
 
                 <div class="mdc-card__actions">
                     <div class="mdc-card__action-buttons">
@@ -30,7 +30,16 @@
                         <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="More options">more_vert</i>
                     </div>
                 </div>
-            </div>
+
+            {% if recipes is defined and recipes|length %}
+                lu
+                {% for recipe in recipes %}
+                    <li>{{ recipe.title }}</li>
+                {% endfor %}
+            {% else %}
+                <p>bla bla bla</p>
+            {% endif %}
+
         </li>
 
 

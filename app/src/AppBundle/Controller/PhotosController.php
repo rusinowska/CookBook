@@ -4,9 +4,11 @@
  */
 namespace AppBundle\Controller;
 
-use AppBundle\Repository\PhotosRepository;
 use AppBundle\Entity\Photo;
+use AppBundle\Entity\Recipe;
 use AppBundle\Form\PhotoType;
+use AppBundle\Repository\PhotosRepository;
+use AppBundle\Repository\RecipesRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -29,13 +31,22 @@ class PhotosController extends Controller
     protected $photosRepository = null;
 
     /**
+     * Recipes repository.
+     *
+     * @var \AppBundle\Repository\RecipesRepository|null $recipesRepository
+     */
+    protected $recipesRepository = null;
+
+    /**
      * PhotosController constructor.
      *
      * @param \AppBundle\Repository\PhotosRepository $photosRepository Photos repository
+     * @param \AppBundle\Repository\RecipesRepository $recipesRepository Recipes repository
      */
-    public function __construct(PhotosRepository $photosRepository)
+    public function __construct(PhotosRepository $photosRepository, RecipesRepository $recipesRepository)
     {
         $this->photosRepository = $photosRepository;
+        $this->recipesRepository = $recipesRepository;
     }
 
     /**
@@ -83,10 +94,16 @@ class PhotosController extends Controller
      */
     public function viewAction(Photo $photo)
     {
+        $recipes = $photo->getRecipes();
+
         return $this->render(
             'photos/view.html.twig',
-            ['photo' => $photo]
+            [
+                'photo' => $photo,
+                'recipes' => $recipes,
+                ]
         );
+
     }
 
     /**

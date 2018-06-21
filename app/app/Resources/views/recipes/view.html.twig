@@ -10,13 +10,38 @@
 
     {% if recipe is defined and recipe|length %}
 
-        <li class="mdc-grid-tile">
 
-            <h1 class="mdc-typography--headline4">{{ recipe.title }}</h1>
 
-                <div class="cb-card__secondary">
-                    <div class="mdc-typography--body2">CATEGORY: {{ category.name }}</div>
-                    <div class="mdc-typography--body2">{{ recipe.description }}</div>
+        <div class="recipe-box">
+
+            <div class="mdc-typography--headline7 category-name">{{ category.name }}</div>
+
+            <div class="row">
+                <div class="col s6">
+                    <h1 class="mdc-typography--headline4">{{ recipe.title }}</h1>
+                </div>
+                <div class="col s6 nav-actions-list right">
+                    <a href="{{ path('recipes_edit', {'id': recipe.id}) }}" class="mdc-button right" title="{{ 'action.edit'|trans }}">
+                        {{ 'action.edit'|trans }}
+                    </a>
+                    <a href="{{ path('recipes_delete', {'id': recipe.id}) }}" class="mdc-button right" title="{{ 'action.delete'|trans }}">
+                        {{ 'action.delete'|trans }}
+                    </a>
+                </div>
+            </div>
+
+            {% if photos is defined and photos|length %}
+                {% for photo in photos %}
+                    <img class="materialboxed center" style="max-width: 100%;" src="{{  asset('uploads/photos/' ~ photo.photo) }}">
+
+                {% endfor %}
+            {% endif %}
+
+
+
+                <div class="row">
+
+                    <h3 class="mdc-typography--headline5">Ingredients</h3>
                     <div class="mdc-chip-set">
                         {% for ingredient in ingredients %}
                             <div class="mdc-chip" tabindex="0">
@@ -24,22 +49,17 @@
                             </div>
                         {% endfor %}
                     </div>
+
+
+                    <h3 class="mdc-typography--headline5">Method</h3>
+                    <div class="mdc-typography--body1 recipe-description">{{ recipe.description }}</div>
+
                     {#{% for key, value in recipe.category %}#}
                     {#<div class="mdc-typography--body2">{{ value }}</div>#}
                     {#{% endfor %}#}
                 </div>
 
-                <div class="mdc-card__actions">
-                    <div class="mdc-card__action-buttons">
-                        <button class="mdc-button mdc-card__action mdc-card__action--button">View</button>
-                    </div>
-                    <div class="mdc-card__action-icons">
-                        <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="Share">share</i>
-                        <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="More options">more_vert</i>
-                    </div>
-                </div>
-
-        </li>
+        </div>
 
 
 

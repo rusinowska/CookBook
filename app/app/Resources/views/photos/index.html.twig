@@ -15,6 +15,7 @@
                 {% for item in photos %}
                     <li class="mdc-grid-tile">
                         <div class="mdc-card">
+
                             <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9" style="background-image: url({{   asset('uploads/photos/' ~ item.photo) }});">
                             </div>
 
@@ -24,7 +25,7 @@
 
                             <div class="mdc-card__actions">
                                 <div class="mdc-card__action-buttons">
-                                    <button class="mdc-button mdc-card__action mdc-card__action--button">View</button>
+                                    <a href="{{ path('photos_view', {'id': item.id}) }}" class="mdc-button mdc-card__action mdc-card__action--button">View</a>
                                 </div>
                             </div>
 

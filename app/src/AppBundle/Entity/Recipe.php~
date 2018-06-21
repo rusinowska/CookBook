@@ -117,194 +117,34 @@ class Recipe
      */
     protected $ingredients;
 
+//    /**
+//     * Photo
+//     *
+//     * @ORM\OneToMany(
+//     *     targetEntity="Photo",
+//     *     mappedBy="recipes",
+//     *     cascade={"persist", "remove"},
+//     *     )
+//     */
+//    protected $photos;
+
+
     /**
-     * Photo
+     * Photos.
      *
-     * @ORM\OneToMany(
+     * @var \Doctrine\Common\Collections\ArrayCollection $photos
+     *
+     * @ORM\ManyToMany(
      *     targetEntity="Photo",
-     *     mappedBy="recipes",
+     *     inversedBy="photo",
      *     cascade={"persist", "remove"},
-     *     orphanRemoval=true
-     *     )
+     * )
+     * @ORM\JoinTable(
+     *     name="recipes_photos"
+     * )
      */
     protected $photos;
 
 
-//    /**
-//     * Photo.
-//     *
-//     * @var \Doctrine\Common\Collections\ArrayCollection $photos
-//     *
-//     * @ORM\ManyToMany(
-//     *     targetEntity="Photo",
-//     *     inversedBy="photo",
-//     *     mappedBy="recipe",
-//     * )
-//     * @ORM\JoinTable(
-//     *     name="recipes_photos"
-//     * )
-//     */
 
-
-
-
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->ingredients = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->photos = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set title
-     *
-     * @param string $title
-     *
-     * @return Recipe
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
-    /**
-     * Get title
-     *
-     * @return string
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Recipe
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set category
-     *
-     * @param \AppBundle\Entity\Category $category
-     *
-     * @return Recipe
-     */
-    public function setCategory(\AppBundle\Entity\Category $category = null)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return \AppBundle\Entity\Category
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * Add ingredient
-     *
-     * @param \AppBundle\Entity\Ingredient $ingredient
-     *
-     * @return Recipe
-     */
-    public function addIngredient(\AppBundle\Entity\Ingredient $ingredient)
-    {
-        $this->ingredients[] = $ingredient;
-
-        return $this;
-    }
-
-    /**
-     * Remove ingredient
-     *
-     * @param \AppBundle\Entity\Ingredient $ingredient
-     */
-    public function removeIngredient(\AppBundle\Entity\Ingredient $ingredient)
-    {
-        $this->ingredients->removeElement($ingredient);
-    }
-
-    /**
-     * Get ingredients
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIngredients()
-    {
-        return $this->ingredients;
-    }
-
-    /**
-     * Add photo
-     *
-     * @param \AppBundle\Entity\Photo $photo
-     *
-     * @return Recipe
-     */
-    public function addPhoto(\AppBundle\Entity\Photo $photo)
-    {
-        $this->photos[] = $photo;
-
-        return $this;
-    }
-
-    /**
-     * Remove photo
-     *
-     * @param \AppBundle\Entity\Photo $photo
-     */
-    public function removePhoto(\AppBundle\Entity\Photo $photo)
-    {
-        $this->photos->removeElement($photo);
-    }
-
-    /**
-     * Get photos
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPhotos()
-    {
-        return $this->photos;
-    }
 }

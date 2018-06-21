@@ -117,35 +117,33 @@ class Recipe
      */
     protected $ingredients;
 
+//    /**
+//     * Photo
+//     *
+//     * @ORM\OneToMany(
+//     *     targetEntity="Photo",
+//     *     mappedBy="recipes",
+//     *     cascade={"persist", "remove"},
+//     *     )
+//     */
+//    protected $photos;
+
+
     /**
-     * Photo
+     * Photos.
      *
-     * @ORM\OneToMany(
+     * @var \Doctrine\Common\Collections\ArrayCollection $photos
+     *
+     * @ORM\ManyToMany(
      *     targetEntity="Photo",
-     *     mappedBy="recipes",
+     *     inversedBy="photo",
      *     cascade={"persist", "remove"},
-     *     orphanRemoval=true
-     *     )
+     * )
+     * @ORM\JoinTable(
+     *     name="recipes_photos"
+     * )
      */
     protected $photos;
-
-
-//    /**
-//     * Photo.
-//     *
-//     * @var \Doctrine\Common\Collections\ArrayCollection $photos
-//     *
-//     * @ORM\ManyToMany(
-//     *     targetEntity="Photo",
-//     *     inversedBy="photo",
-//     *     mappedBy="recipe",
-//     * )
-//     * @ORM\JoinTable(
-//     *     name="recipes_photos"
-//     * )
-//     */
-
-
 
 
 

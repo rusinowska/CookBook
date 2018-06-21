@@ -27,15 +27,17 @@
                 {% for item in recipes %}
                     <li class="mdc-grid-tile">
                         <div class="mdc-card">
-                            <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9" style="background-image: url({#  asset('uploads/photos/' ~ recipe.photo) #});">
-                            </div>
+
+                            {% for photo in item.getPhotos() %}
+                                <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9" style="background-image: url({{   asset('uploads/photos/' ~ photo.photo) }});"></div>
+                                {% endfor %}
 
                             <div class="cb-card__primary">
                                 <div class="cb__title mdc-typography--headline6">{{ item.title }}</div>
                             </div>
 
                             <div class="cb-card__secondary">
-                                <div class="mdc-typography--body2">{{ item.description|slice(0, 30) }}...</div>
+                                <div class="mdc-typography--body2">{{ item.description|slice(0, 100) }}...</div>
                                 <div class="mdc-chip-set">
                                     {#{% for key, value in item.ingredients %}#}
                                     {#<div class="mdc-chip" tabindex="0">#}
