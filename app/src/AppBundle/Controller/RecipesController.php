@@ -8,6 +8,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Recipe;
 use AppBundle\Entity\Photo;
 use AppBundle\Form\RecipeType;
+use AppBundle\Form\ResultType;
 use AppBundle\Repository\RecipesRepository;
 use AppBundle\Repository\IngredientsRepository;
 use AppBundle\Repository\CategoriesRepository;
@@ -243,6 +244,59 @@ class RecipesController extends Controller
 
         return $this->render(
             'recipes/delete.html.twig',
+            [
+                'recipe' => $recipe,
+                'form' => $form->createView(),
+            ]
+        );
+    }
+
+    /**
+     * Search action.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
+     * @param \AppBundle\Entity\Recipe $recipe Recipe entity
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response HTTP Response
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
+     *
+     * @Route(
+     *     "/search",
+     *     name="recipes_search",
+     * )
+     * @Method({"GET", "POST"})
+     */
+    public function searchAction(Request $request)
+    {
+        $recipe = new Recipe();
+        $form = $this->createForm(ResultType::class, $recipe);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $recipe = $this->recipesRepository->findOneBy(['ingredients' => $data->getIngredients()]);
+
+            if (is_null($recipe)) {
+                $this->addFlash('danger', 'message.not_found');
+
+                return $this->redirectToRoute(
+                    'recipes_index'
+                );
+            }
+
+            return $this->redirectToRoute(
+                'recipes_view',
+                [
+                    'id' => $recipe->getId(),
+                ]
+            );
+
+
+        }
+
+        return $this->render(
+            'recipes/search.html.twig',
             [
                 'recipe' => $recipe,
                 'form' => $form->createView(),

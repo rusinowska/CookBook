@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityRepository;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use AppBundle\Entity\Recipe;
+use AppBundle\Entity\Ingredient;
 
 
 /**
@@ -17,6 +18,19 @@ use AppBundle\Entity\Recipe;
  */
 class RecipesRepository extends EntityRepository
 {
+
+    /**
+     * Find single record by its id.
+     *
+     * @param integer $id Single record index
+     *
+     * @return array|null Result
+     */
+    public function findOneByIngredient(Ingredient $ingredient)
+    {
+        return isset($this->recipes[$ingredient]) && count($this->recipes)
+            ? $this->recipes[$ingredient] : null;
+    }
 
     /**
      * Find single record by its id.

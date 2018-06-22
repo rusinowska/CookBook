@@ -63,7 +63,9 @@ class Recipe
      * @Assert\Length(
      *     min="3",
      *     max="128",
+     *     groups={"recipe-default", "recipe-search"}
      * )
+     *
      */
     protected $title;
 

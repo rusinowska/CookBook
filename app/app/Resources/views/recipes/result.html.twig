@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.search'|trans }}
+{% endblock %}
+
+{% block body %}
+
+    <h1>{{ 'title.search'|trans }}</h1>
+    <article class="container">
+        {% if photos is defined and photos|length %}
+            <ul class="row list-unstyled">
+                {% for item in photos %}
+                    <li class="col-sm-12 col-md-6 col-lg-4 photos__list-item">
+                        <a class="button--link" href="{{ path('photos_view', {'id': item.id}) }}" title="{{ 'action.view'|trans }}">
+                            <figure class="photos__container">
+                                <img class="photos" src="{{  asset('uploads/photos/' ~ item.photo) }}" alt="{{ item.name }}">
+                                <figcaption class="sr-only">{{ item.name }}</figcaption>
+                            </figure>
+                        </a>
+                    </li>
+
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>
+                {{ 'message.empty_list'|trans }}
+            </p>
+        {% endif %}
+    </article>
+
+
+{% endblock %}
