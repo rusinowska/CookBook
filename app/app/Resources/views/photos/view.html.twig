@@ -1,46 +1,36 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.photos'|trans }}
+    {{ 'title.photo_view'|trans }}
 {% endblock %}
 
 {% block body %}
 
-    <h1>{{ 'title.photos'|trans }}</h1>
 
     {% if photo is defined and photo|length %}
 
-        <li class="mdc-grid-tile">
+        <div class="recipe-box">
 
-                <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9">
+            <div class="row">
+                <div class="col s6">
+                    <h1 class="mdc-typography--headline4">{{ photo.name }}</h1>
                 </div>
-
-                <div class="cb-card__primary">
-                    <div class="cb__title mdc-typography--headline6">{{ photo.name }}</div>
-                </div>
-
-                <img class="photos" src="{{  asset('uploads/photos/' ~ photo.photo) }}" alt="{{ photo.name }}" style="max-width: 600px;">
-
-                <div class="mdc-card__actions">
-                    <div class="mdc-card__action-buttons">
-                        <button class="mdc-button mdc-card__action mdc-card__action--button">View</button>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <div class="col s6 nav-actions-list right">
+                        <a href="{{ path('photos_edit', {'id': photo.id}) }}" class="mdc-button right" title="{{ 'action.edit'|trans }}">
+                            {{ 'action.edit'|trans }}
+                        </a>
+                        <a href="{{ path('photos_delete', {'id': photo.id}) }}" class="mdc-button right" title="{{ 'action.delete'|trans }}">
+                            {{ 'action.delete'|trans }}
+                        </a>
                     </div>
-                    <div class="mdc-card__action-icons">
-                        <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="Share">share</i>
-                        <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="More options">more_vert</i>
-                    </div>
-                </div>
+                {% endif %}
+            </div>
 
-            {% if recipes is defined and recipes|length %}
-                lu
-                {% for recipe in recipes %}
-                    <li>{{ recipe.title }}</li>
-                {% endfor %}
-            {% else %}
-                <p>bla bla bla</p>
-            {% endif %}
+            <img class="materialboxed center" style="max-width: 100%;" src="{{  asset('uploads/photos/' ~ photo.photo) }}">
 
-        </li>
+
+        </div>
 
 
 

@@ -44,6 +44,9 @@ class PhotoType extends AbstractType
             [
                 'label' => 'label.photo',
                 'required' => true,
+                'data_class' => null,
+                'attr' => [
+                    'class' => 'mdc-button mdc-button--raised photo-button'],
             ]
         );
     }
@@ -58,6 +61,7 @@ class PhotoType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Photo::class,
+                'validation_groups' => 'photo-default',
             ]
         );
     }

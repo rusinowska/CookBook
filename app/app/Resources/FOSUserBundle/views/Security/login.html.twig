@@ -1,0 +1,61 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}
+    {{ 'title.login'|trans }}
+{% endblock %}
+
+{% block body %}
+    {% if error %}
+        {% include 'default/_single_flash_message.html.twig' with {
+            type: 'danger',
+            message: 'message.bad_credentials'|trans,
+        }%}
+    {% endif %}
+
+
+
+
+
+    <div class="card my-card center-full">
+        <div class="card-content">
+            <h3 class="mdc-typography--headline5">Log in</h3>
+            <form action="{{ path("fos_user_security_check") }}" method="post">
+
+                <div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+
+
+                <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+
+                <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+                <input type="password" id="password" name="_password" required="required" />
+                </div>
+
+
+                <div class="row">
+
+                    <label for="remember_me">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" style="opacity: 0;" />
+                        <span>{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</span>
+                    </label>
+                    <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans({}, 'FOSUserBundle') }}" class="mdc-button mdc-button--raised right" />
+                </div>
+            </form>
+
+         </div>
+    </div>
+
+        <div class="row content-center">
+            <a href="{{ path("home_index") }}" class="mdc-button mdc-button-back is-center">
+                <i class="material-icons">
+                    arrow_back
+                </i>
+                {{ 'action.back_to_homepage'|trans }}
+
+            </a>
+        </div>
+
+
+
+{% endblock body %}

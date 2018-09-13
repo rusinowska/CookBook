@@ -1,0 +1,19 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    {{ 'title.home'|trans }}
+{% endblock %}
+
+{% block body %}
+
+    <div class="is-center center-full ">
+
+            <h1 class="mdc-typography--headline2 typography-negative">Let's start cooking with us!</h1>
+            <a href="{{ path('fos_user_registration_register') }}" class="mdc-button mdc-button--raised is-center">
+               Let's start
+            </a>
+
+    </div>
+
+
+{% endblock %}

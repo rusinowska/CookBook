@@ -1,0 +1,97 @@
+html, body {
+  margin: 0;
+  background: #f3f2f2; }
+
+.my-card {
+  height: auto;
+  width: 350px; }
+
+.page__main-section {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 900px; }
+
+.cb-card__primary {
+  padding: 1rem; }
+
+.cb-card__secondary {
+  padding: 1rem; }
+
+.mdc-grid-tile {
+  --mdc-grid-list-tile-width: 300px; }
+
+nav a.sidenav-trigger {
+  display: block; }
+
+nav .brand-logo {
+  font-size: 1.5rem; }
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+  opacity: 1; }
+
+nav {
+  color: #fff;
+  background-color: #9ccc65; }
+
+.sidenav .user-view {
+  position: relative;
+  padding: 84px 32px 32px 32px;
+  margin-bottom: 8px; }
+
+.nav-actions-list {
+  margin: 2.8rem 0 1.68rem 0; }
+
+.mdc-button--raised:not(:disabled),
+.mdc-button--unelevated:not(:disabled) {
+  background-color: #6b9b37; }
+
+.category-name {
+  margin: 1.8rem 0 0rem 0;
+  text-transform: uppercase; }
+
+.recipe-description {
+  margin: 2.8rem auto 1.68rem auto;
+  max-width: 700px; }
+
+.recipe-box {
+  margin-bottom: 4rem; }
+
+.activetoggle {
+  background-color: #6b9b37;
+  color: white; }
+
+.activetoggle:hover {
+  color: white; }
+
+.hidetile {
+  display: none; }
+
+#recipe_ingredients {
+  display: flex; }
+
+.checkbox label {
+  display: flex;
+  width: auto;
+  min-width: 60px;
+  padding-left: 20px;
+  margin-left: 10px; }
+
+.checkbox label input {
+  margin-left: -20px;
+  margin-top: 3px; }
+
+.form-group {
+  margin-bottom: 24px; }
+
+.mdc-card-form {
+  padding: 1rem 2rem;
+  margin-top: 2rem; }
+
+.mdc-button-back {
+  margin-top: 2rem; }
+
+.is-center {
+  margin-left: auto;
+  margin-right: auto; }
+
+/*# sourceMappingURL=styles.css.map */

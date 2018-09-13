@@ -1,0 +1,13 @@
+{#
+    Custom form errors template for bootstrap 3 tempate (bootstrap_3_layout.html.twig).
+    Changes were required for proper global error render.
+#}
+
+{% block form_errors -%}
+    {% if false == form.vars.valid %}
+        {% include 'default/_single_flash_message.html.twig' with {
+            type: 'danger',
+            message: 'message.form_error'|trans,
+        }%}
+    {% endif %}
+{%- endblock form_errors %}

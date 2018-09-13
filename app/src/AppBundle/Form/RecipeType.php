@@ -8,6 +8,7 @@ use AppBundle\Entity\Recipe;
 use AppBundle\Entity\Ingredient;
 use AppBundle\Entity\Category;
 use AppBundle\Form\PhotoType;
+use AppBundle\Repository\IngredientsRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,13 +17,30 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 /**
  * Class RecipeType.
  */
 class RecipeType extends AbstractType
 {
-
+//    /**
+//     * Ingredients repository.
+//     *
+//     * @var \AppBundle\Repository\IngredientsRepository|null $ingredientsRepository
+//     */
+//    protected $ingredientsRepository = null;
+//
+//    /**
+//     * RecipeType constructor.
+//     *
+//     * @param IngredientsRepository $ingredientsRepository Ingredient repository
+//     */
+//    public function __construct(IngredientsRepository $ingredientsRepository)
+//    {
+//        $this->ingredientsRepository= $ingredientsRepository;
+//    }
     /**
      * {@inheritdoc}
      *
@@ -66,9 +84,18 @@ class RecipeType extends AbstractType
                 'label' => 'label.ingredient',
                 'required' => false,
                 'expanded' => true,
-                'multiple' => true
+                'multiple' => true,
+                'attr' => [
+                    'class' => 'mdc-chip-set'],
+                'choice_attr' => [
+                    'class' => 'mdc-chip'],
             ]
         );
+
+//        $builder->get('ingredients')->addModelTransformer(
+//            new IngredientsDataTransformer($this->$ingredientsRepository)
+//        );
+
         $builder->add(
             'category',
             EntityType::class,
@@ -105,6 +132,7 @@ class RecipeType extends AbstractType
         $resolver->setDefaults(
             [
                 'data_class' => Recipe::class,
+                'validation_groups' => 'recipe-default',
             ]
         );
     }

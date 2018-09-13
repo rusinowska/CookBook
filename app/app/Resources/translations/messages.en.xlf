@@ -21,8 +21,31 @@
             </trans-unit>
             <trans-unit id="title.users">
                 <source>title.users</source>
-                <target>users</target>
+                <target>Users</target>
             </trans-unit>
+
+
+            <trans-unit id="title.recipe_view">
+                 <source>title.recipe_view</source>
+                 <target>Recipe view</target>
+            </trans-unit>
+            <trans-unit id="title.ingredient_view">
+                 <source>title.ingredient_view</source>
+                 <target>Ingredient view</target>
+            </trans-unit>
+            <trans-unit id="title.category_view">
+                 <source>title.category_view</source>
+                 <target>Category view</target>
+            </trans-unit>
+            <trans-unit id="title.photo_view">
+                 <source>title.photo_view</source>
+                 <target>Photo view</target>
+            </trans-unit>
+            <trans-unit id="title.user_view">
+                 <source>title.user_view</source>
+                 <target>User view</target>
+            </trans-unit>
+
 
 
             <trans-unit id="title.category_add">
@@ -50,6 +73,10 @@
                  <source>title.ingredient_edit</source>
                  <target>Edit ingredient</target>
             </trans-unit>
+            <trans-unit id="title.photo_edit">
+                 <source>title.photo_edit</source>
+                 <target>Edit photo</target>
+            </trans-unit>
 
             <trans-unit id="title.category_delete">
                 <source>title.category_delete</source>
@@ -63,6 +90,11 @@
                  <source>title.ingredient_delete</source>
                  <target>Delete ingredient</target>
             </trans-unit>
+            <trans-unit id="title.photo_delete">
+                 <source>title.photo_delete</source>
+                 <target>Delete photo</target>
+            </trans-unit>
+
 
             <trans-unit id="label.name">
                   <source>label.name</source>
@@ -113,15 +145,82 @@
                   <source>action.delete</source>
                   <target>Delete</target>
             </trans-unit>
+            <trans-unit id="action.promote">
+                  <source>action.promote</source>
+                  <target>Promote</target>
+            </trans-unit>
+            <trans-unit id="action.demote">
+                  <source>action.demote</source>
+                  <target>Demote</target>
+            </trans-unit>
             <trans-unit id="action.back_to_list">
                   <source>action.back_to_list</source>
                   <target>Back to list</target>
             </trans-unit>
+            <trans-unit id="action.back_to_homepage">
+                  <source>action.back_to_homepage</source>
+                  <target>Back to homepage</target>
+            </trans-unit>
+
+
 
             <trans-unit id="message.empty_list">
                   <source>message.empty_list</source>
                   <target>Looks like this list is empty :(</target>
             </trans-unit>
+            <trans-unit id="message.bad_credentials">
+                  <source>message.bad_credentials</source>
+                  <target>Bad credentials</target>
+            </trans-unit>
+            <trans-unit id="message.created_successfully">
+                  <source>message.created_successfully</source>
+                  <target>Created successfully</target>
+            </trans-unit>
+            <trans-unit id="message.deleted_successfully">
+                  <source>message.deleted_successfully</source>
+                  <target>Deleted successfully</target>
+            </trans-unit>
+            <trans-unit id="message.modified_successfully">
+                  <source>message.modified_successfully</source>
+                  <target>Modified successfully</target>
+            </trans-unit>
+            <trans-unit id="message.form_error">
+                  <source>message.form_error</source>
+                  <target>Form error</target>
+            </trans-unit>
+
+
+            <trans-unit id="title.home">
+                  <source>title.home</source>
+                  <target>CookBook</target>
+            </trans-unit>
+            <trans-unit id="title.login">
+                  <source>title.login</source>
+                  <target>Sign in</target>
+            </trans-unit>
+            <trans-unit id="title.logout">
+                  <source>title.logout</source>
+                  <target>Log out</target>
+            </trans-unit>
+            <trans-unit id="title.register">
+                  <source>title.register</source>
+                  <target>Sign up</target>
+            </trans-unit>
+            <trans-unit id="title.user_add_self">
+                  <source>title.user_add_self</source>
+                  <target>Create account</target>
+            </trans-unit>
+            <trans-unit id="title.user_add">
+                  <source>title.user_add</source>
+                  <target>Add user</target>
+            </trans-unit>
+            <trans-unit id="title.user_delete">
+                  <source>title.user_delete</source>
+                  <target>Delete user</target>
+            </trans-unit>
+
+
+
         </body>
     </file>
 </xliff>

@@ -119,17 +119,19 @@ class Recipe
      */
     protected $ingredients;
 
-//    /**
-//     * Photo
-//     *
-//     * @ORM\OneToMany(
-//     *     targetEntity="Photo",
-//     *     mappedBy="recipes",
-//     *     cascade={"persist", "remove"},
-//     *     )
-//     */
-//    protected $photos;
-
+    /**
+     * User
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="UserBundle\Entity\User",
+     *     inversedBy="recipes"
+     * )
+     * @ORM\JoinColumn(
+     *     name="user_id",
+     *     referencedColumnName="id"
+     * )
+     */
+    protected $user;
 
     /**
      * Photos.
@@ -272,6 +274,30 @@ class Recipe
     public function getIngredients()
     {
         return $this->ingredients;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     *
+     * @return Recipe
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 
     /**

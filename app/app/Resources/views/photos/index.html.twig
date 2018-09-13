@@ -10,26 +10,17 @@
 
     {% if photos is defined and photos|length %}
 
-        <div class="mdc-grid-list">
+        <a class="mdc-grid-list">
             <ul class="mdc-grid-list__tiles">
                 {% for item in photos %}
                     <li class="mdc-grid-tile">
-                        <div class="mdc-card">
+                        <a href="{{ path('photos_view', {'id': item.id}) }}" class="mdc-card">
 
                             <div class="mdc-card__media my-card__media mdc-card__media mdc-card__media--16-9" style="background-image: url({{   asset('uploads/photos/' ~ item.photo) }});">
+
                             </div>
 
-                            <div class="cb-card__primary">
-                                <div class="cb__title mdc-typography--headline6">{{ item.name }}</div>
-                            </div>
-
-                            <div class="mdc-card__actions">
-                                <div class="mdc-card__action-buttons">
-                                    <a href="{{ path('photos_view', {'id': item.id}) }}" class="mdc-button mdc-card__action mdc-card__action--button">View</a>
-                                </div>
-                            </div>
-
-                        </div>
+                        </a>
                    </li>
                 {% endfor %}
             </ul>
@@ -39,10 +30,6 @@
             {{ pagerfanta(photos, 'twitter_bootstrap3_translated', { routeName: ('photos_index_paginated') }) }}
         </div>
 
-        <button class="mdc-button">
-            <i class="material-icons mdc-button__icon" aria-hidden="true">favorite</i>
-            Button
-        </button>
 
     {% else %}
         <p>

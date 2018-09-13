@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.recipes'|trans }}
+    {{ 'title.recipe_view'|trans }}
 {% endblock %}
 
 {% block body %}
@@ -19,7 +19,9 @@
             <div class="row">
                 <div class="col s6">
                     <h1 class="mdc-typography--headline4">{{ recipe.title }}</h1>
+                    <p classes="mdc-typography--headline6">by @{{ recipe.user }}</p>
                 </div>
+                {% if is_granted('ROLE_SUPER_ADMIN') or recipe.user.id == app.user.id%}
                 <div class="col s6 nav-actions-list right">
                     <a href="{{ path('recipes_edit', {'id': recipe.id}) }}" class="mdc-button right" title="{{ 'action.edit'|trans }}">
                         {{ 'action.edit'|trans }}
@@ -28,6 +30,7 @@
                         {{ 'action.delete'|trans }}
                     </a>
                 </div>
+                {% endif %}
             </div>
 
             {% if photos is defined and photos|length %}
@@ -51,7 +54,7 @@
                     </div>
 
 
-                    <h3 class="mdc-typography--headline5">Methodcd </h3>
+                    <h3 class="mdc-typography--headline5">Description</h3>
                     <div class="mdc-typography--body1 recipe-description">{{ recipe.description }}</div>
 
                     {#{% for key, value in recipe.category %}#}

@@ -11,21 +11,45 @@
             <h1 class="mdc-typography--headline4">{{ 'title.recipes'|trans }}</h1>
         </div>
         <div class="col s6 nav-actions-list">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
             <a href="{{ path('recipes_add') }}" class="mdc-button mdc-button--raised right">
                 <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
                 add new
             </a>
+            {% endif %}
         </div>
+    </div>
+
+
+
+    <div class="row">
+        <h2 class="mdc-typography--subtitle1">Select ingredients that you have in your kitchen</h2>
+
+        {% if ingredients is defined and ingredients|length %}
+            <div class="mdc-chip-set togglebutton_set">
+                {% for ingredient in ingredients %}
+                    <div class="mdc-chip togglebutton" tabindex="0" id="{{ ingredient.name }}">
+                        <div class="mdc-chip__text">{{ ingredient.name }}</div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 
 
 
     {% if recipes is defined and recipes|length %}
 
+
+
         <div class="mdc-grid-list">
-            <ul class="mdc-grid-list__tiles">
-                {% for item in recipes %}
-                    <li class="mdc-grid-tile">
+            <ul class="mdc-grid-list__tiles" id="recipes_tiles">
+
+
+
+                {% for item in recipes|reverse(true) %}
+
+                    <li class="mdc-grid-tile recipe_card {% for ingredient in item.getIngredients() %} {{ ingredient.name }} {% endfor %}" id="lol">
                         <div class="mdc-card">
 
                             {% for photo in item.getPhotos() %}
@@ -37,25 +61,20 @@
                             </div>
 
                             <div class="cb-card__secondary">
-                                <div class="mdc-typography--body2">{{ item.description|slice(0, 100) }}...</div>
                                 <div class="mdc-chip-set">
-                                    {#{% for key, value in item.ingredients %}#}
-                                    {#<div class="mdc-chip" tabindex="0">#}
-                                        {#<div class="mdc-chip__text">{{ key }}</div>#}
-                                    {#</div>#}
-                                    {#{% endfor %}#}
+                                    {% for ingredient in item.getIngredients()|slice(0, 4) %}
+                                        <div class="mdc-chip" tabindex="0">
+                                            <div class="mdc-chip__text">{{ ingredient.name }}</div>
+                                        </div>
+                                    {% endfor %}
+
                                 </div>
-                                 {#{% for key, value in item.category %}#}
-                                {#<div class="mdc-typography--body2">{{ value }}</div>#}
-                                     {#{% endfor %}#}
                             </div>
 
+
                             <div class="mdc-card__actions">
-                                <div class="mdc-card__action-buttons">
+                                <div class="mdc-card__action-buttons right">
                                     <a href="{{ path('recipes_view', {'id': item.id}) }}" class="mdc-button mdc-card__action mdc-card__action--button">View</a>
-                                </div>
-                                <div class="mdc-card__action-icons">
-                                    <i class="material-icons mdc-card__action mdc-card__action--icon" tabindex="0" role="button" title="Share">share</i>
                                 </div>
                             </div>
                         </div>
@@ -64,19 +83,45 @@
             </ul>
         </div>
 
-        <div class="navigation text-center">
-            {{ pagerfanta(recipes, 'twitter_bootstrap3_translated', { routeName: ('recipes_index_paginated') }) }}
+        <div class="pagination content-center">
+            {{ pagerfanta(recipes, 'twitter_bootstrap3_translated',
+                {
+                routeName: ('recipes_index_paginated'),
+                'proximity': 2,
+                'prev_message' : '<i class="material-icons">keyboard_arrow_left</i>',
+                'next_message' : '<i class="material-icons">keyboard_arrow_right</i>',
+                'omitFirstPage': true
+                })
+            }}
         </div>
-
-        <button class="mdc-button">
-            <i class="material-icons mdc-button__icon" aria-hidden="true">favorite</i>
-            Button
-        </button>
 
     {% else %}
         <p>
             {{ 'message.empty_list'|trans }}
         </p>
     {% endif %}
+
+
+
+
+
+        {#<script>#}
+            {#$(document).ready(function() {#}
+
+                    {#var x = "egg";#}
+                    {#var toggleButton = document.getElementsByClassName('togglebutton');#}
+
+                    {#var tiles = document.getElementsByClassName("mdc-grid-tile");#}
+
+                    {#$(toggleButton).on('click', function() {#}
+                        {#var value = $(this).attr('id');#}
+                        {#$(this).addClass('activetoggle');#}
+                        {#$(tiles).not( '.'+ value +'').addClass('hidetile');#}
+                    {#});#}
+
+            {#});#}
+
+        {#</script>#}
+
 
 {% endblock %}

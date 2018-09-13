@@ -45,6 +45,7 @@ class RecipesRepository extends EntityRepository
             ? $this->recipes[$id] : null;
     }
 
+
     /**
      * Gets all records paginated.
      *
@@ -62,6 +63,23 @@ class RecipesRepository extends EntityRepository
     }
 
     /**
+     * Gets all records paginated by name.
+     *
+     * @param int $user Searched user
+     * @param int $page Page number
+     *
+     * @return \Pagerfanta\Pagerfanta Result
+     */
+    public function findAllPaginatedByUser($user, $page = 1)
+    {
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($this->queryAllByUser($user), false));
+        $paginator->setMaxPerPage(Recipe::NUM_ITEMS);
+        $paginator->setCurrentPage($page);
+
+        return $paginator;
+    }
+
+    /**
      * Query all entities.
      *
      * @return \Doctrine\ORM\QueryBuilder
@@ -69,6 +87,26 @@ class RecipesRepository extends EntityRepository
     protected function queryAll()
     {
         return $this->createQueryBuilder('recipe');
+    }
+
+    /**
+     * Query all entities by name.
+     *
+     * @param int $user Searched user id
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function queryAllByUser($user)
+    {
+        $queryAllByUser = $this->createQueryBuilder('g')
+            ->select("g")
+            ->where('g.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery();
+
+        $searched = $queryAllByUser;
+
+        return $searched;
     }
 
     /**

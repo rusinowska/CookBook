@@ -79,6 +79,20 @@ class Ingredient
      */
     protected $name;
 
+    /**
+     * User
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="UserBundle\Entity\User",
+     *     inversedBy="ingredients"
+     * )
+     * @ORM\JoinColumn(
+     *     name="user_id",
+     *     referencedColumnName="id"
+     * )
+     */
+    protected $user;
+
 //    /**
 //     * Quantity.
 //     *
@@ -142,6 +156,7 @@ class Ingredient
 //    {
 //        return $this->quantity;
 //    }
+
 
 
 
@@ -219,5 +234,29 @@ class Ingredient
     public function getRecipes()
     {
         return $this->recipes;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     *
+     * @return Ingredient
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

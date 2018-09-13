@@ -12,6 +12,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class CategoriesController.
@@ -21,20 +23,39 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoriesController extends Controller
 {
     /**
+     * Authentication Checker.
+     *
+     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface|null $security
+     */
+    protected $authorizationChecker = null;
+
+    /**
+     * Token storage.
+     *
+     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface|null $tokenStorage
+     */
+    protected $tokenStorage = null;
+
+    /**
      * Categories repository.
      *
      * @var \AppBundle\Repository\CategoriesRepository|null $categoriesRepository
      */
     protected $categoriesRepository = null;
 
+
     /**
      * CategoriesController constructor.
      *
      * @param \AppBundle\Repository\CategoriesRepository $categoriesRepository Categories repository
+     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
+     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      */
-    public function __construct(CategoriesRepository $categoriesRepository)
+    public function __construct(CategoriesRepository $categoriesRepository, AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage)
     {
         $this->categoriesRepository = $categoriesRepository;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -58,13 +79,17 @@ class CategoriesController extends Controller
      */
     public function indexAction($page)
     {
-        $categories = $this->categoriesRepository->findAllPaginated($page);
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $categories = $this->categoriesRepository->findAllPaginated($page);
 
-        return $this->render(
-            'categories/index.html.twig',
-            ['categories' => $categories]
-        );
-
+            return $this->render(
+                'categories/index.html.twig',
+                ['categories' => $categories]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction');
+            return $response;
+        }
     }
     /**
      * View action.
@@ -82,10 +107,15 @@ class CategoriesController extends Controller
      */
     public function viewAction(Category $category)
     {
-        return $this->render(
-            'categories/view.html.twig',
-            ['category' => $category]
-        );
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            return $this->render(
+                'categories/view.html.twig',
+                ['category' => $category]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction');
+            return $response;
+        }
     }
 
     /**
@@ -105,24 +135,31 @@ class CategoriesController extends Controller
      */
     public function addAction(Request $request)
     {
-        $category = new Category();
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $category = new Category();
+            $form = $this->createForm(CategoryType::class, $category);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->categoriesRepository->save($category);
-            $this->addFlash('success', 'message.created_successfully');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->categoriesRepository->save($category);
+                $this->addFlash('success', 'message.created_successfully');
 
-            return $this->redirectToRoute('categories_index');
+                return $this->redirectToRoute('categories_index');
+            }
+
+            return $this->render(
+                'categories/add.html.twig',
+                [
+                    'category' => $category,
+                    'form' => $form->createView(),
+                ]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+                $request
+            ));
+            return $response;
         }
-
-        return $this->render(
-            'categories/add.html.twig',
-            [
-                'category' => $category,
-                'form' => $form->createView(),
-            ]
-        );
     }
 
     /**
@@ -144,23 +181,30 @@ class CategoriesController extends Controller
      */
     public function editAction(Request $request, Category $category)
     {
-        $form = $this->createForm(CategoryType::class, $category);
-        $form->handleRequest($request);
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $form = $this->createForm(CategoryType::class, $category);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->categoriesRepository->save($category);
-            $this->addFlash('success', 'message.modified_successfully');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->categoriesRepository->save($category);
+                $this->addFlash('success', 'message.modified_successfully');
 
-            return $this->redirectToRoute('categories_index');
+                return $this->redirectToRoute('categories_index');
+            }
+
+            return $this->render(
+                'categories/edit.html.twig',
+                [
+                    'category' => $category,
+                    'form' => $form->createView(),
+                ]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+                $request
+            ));
+            return $response;
         }
-
-        return $this->render(
-            'categories/edit.html.twig',
-            [
-                'category' => $category,
-                'form' => $form->createView(),
-            ]
-        );
     }
 
     /**
@@ -182,22 +226,29 @@ class CategoriesController extends Controller
      */
     public function deleteAction(Request $request, Category $category)
     {
-        $form = $this->createForm(FormType::class, $category); //nie Category ???
-        $form->handleRequest($request);
+        if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+            $form = $this->createForm(FormType::class, $category); //nie Category ???
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->categoriesRepository->delete($category);
-            $this->addFlash('success', 'message.deleted_successfully');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->categoriesRepository->delete($category);
+                $this->addFlash('success', 'message.deleted_successfully');
 
-            return $this->redirectToRoute('categories_index');
+                return $this->redirectToRoute('categories_index');
+            }
+
+            return $this->render(
+                'categories/delete.html.twig',
+                [
+                    'category' => $category,
+                    'form' => $form->createView(),
+                ]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+                $request
+            ));
+            return $response;
         }
-
-        return $this->render(
-            'categories/delete.html.twig',
-            [
-                'category' => $category,
-                'form' => $form->createView(),
-            ]
-        );
     }
 }

@@ -89,21 +89,6 @@ class Photo
      */
     protected $photo;
 
-
-//    /**
-//     * Recipes
-//     *
-//     * @ORM\ManyToOne(
-//     *     targetEntity="Recipe",
-//     *     inversedBy="photos"
-//     * )
-//     * @ORM\JoinColumn(
-//     *     name="recipe_id",
-//     *     referencedColumnName="id",
-//     * )
-//     */
-//    protected $recipes;
-
     /**
      * Recipes.
      *
@@ -116,35 +101,19 @@ class Photo
      */
     protected $recipes;
 
-
-
-    //////
-//
-//    /**
-//     * Add photo
-//     *
-//     * @param \AppBundle\Entity\Photo $photo
-//     *
-//     * @return Photo
-//     */
-//    public function addPhoto(\AppBundle\Entity\Photo $photo)
-//    {
-//        $this->photo[] = $photo;
-//
-//        return $this;
-//    }
-//
-//    /**
-//     * Remove photo
-//     *
-//     * @param \AppBundle\Entity\Photo $photo
-//     */
-//    public function removePhoto(\AppBundle\Entity\Photo $photo)
-//    {
-//        $this->photos->removeElement($photo);
-//    }
-
-
+    /**
+     * User
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="UserBundle\Entity\User",
+     *     inversedBy="photos"
+     * )
+     * @ORM\JoinColumn(
+     *     name="user_id",
+     *     referencedColumnName="id"
+     * )
+     */
+    protected $user;
 
 
 
@@ -246,5 +215,29 @@ class Photo
     public function getRecipes()
     {
         return $this->recipes;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     *
+     * @return Photo
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

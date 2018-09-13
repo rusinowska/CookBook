@@ -1,0 +1,21 @@
+
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ 'title.user_edit'|trans }}
+{% endblock %}
+{% block body %}
+    <h1 class="sr-only">{{ 'title.user_edit'|trans }}</h1>
+    <article class="container">
+        <div class="row">
+            <form action="{{ path('users_edit', {'id': user.id})}}" method="post">
+                <div>{{ form_row(form.username) }}</div>
+                <div>{{ form_row(form.email) }}</div>
+                <div>{{ form_row(form._token) }}</div>
+                <div>
+                    <input class="btn button--edit" type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+                </div>
+            </form>
+        </div>
+    </article>
+{% endblock body %}

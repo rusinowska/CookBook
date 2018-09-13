@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.error404'|trans }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.error404'|trans }}</h1>
+
+    <p>
+        The requested page couldn't be located. Checkout for any URL
+        misspelling or <a href="{{ path('homepage') }}">return to the homepage </a> &#9752;.
+    </p>
+
+{% endblock %}

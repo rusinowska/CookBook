@@ -74,6 +74,20 @@ class Category
      */
     private $recipes;
 
+    /**
+     * User
+     *
+     * @ORM\ManyToOne(
+     *     targetEntity="UserBundle\Entity\User",
+     *     inversedBy="categories"
+     * )
+     * @ORM\JoinColumn(
+     *     name="user_id",
+     *     referencedColumnName="id"
+     * )
+     */
+    protected $user;
+
 
 
 
@@ -151,5 +165,29 @@ class Category
     public function getRecipes()
     {
         return $this->recipes;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \UserBundle\Entity\User $user
+     *
+     * @return Category
+     */
+    public function setUser(\UserBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

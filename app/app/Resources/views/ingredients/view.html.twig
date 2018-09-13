@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'title.cingredients'|trans }}
+    {{ 'title.ingredient_view'|trans }}
 {% endblock %}
 
 {% block body %}
@@ -21,6 +21,14 @@
             <i class="material-icons mdc-button__icon" aria-hidden="true">keyboard_backspace</i>
             all ingredients
         </a>
+
+        {% if recipes is defined and recipes|length %}
+
+            {% for recipe in recipes %}
+                <li>{{ recipe.title }}</li>
+            {% endfor %}
+        {% else %}
+        {% endif %}
 
 
 

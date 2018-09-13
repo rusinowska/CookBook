@@ -6,12 +6,26 @@
 
 {% block body %}
 
-    <h1 class="mdc-typography--headline4">{{ 'title.ingredients'|trans }}</h1>
+
+
+    <div class="row">
+        <div class="col s6">
+            <h1 class="mdc-typography--headline4">{{ 'title.ingredients'|trans }}</h1>
+        </div>
+        <div class="col s6 nav-actions-list">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <a href="{{ path('ingredients_add') }}" class="mdc-button mdc-button--raised right">
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">add</i>
+                    add new
+                </a>
+            {% endif %}
+        </div>
+    </div>
 
     {% if ingredients is defined and ingredients|length %}
         <hr class="mdc-list-divider">
         <ul class="mdc-list">
-            {% for item in ingredients %}
+            {% for item in ingredients|reverse(true) %}
                 <li class="mdc-list-item">
                     <div class="mdc-chip-set">
                         <div class="mdc-chip" tabindex="0">
@@ -19,9 +33,6 @@
                         </div>
                     </div>
                     <div class="mdc-list-item__meta" role="group" aria-label="{{ 'label.actions'|trans }}">
-                        <a href="{{ path('ingredients_view', {'id': item.id}) }}" class="mdc-button" title="{{ 'action.view'|trans }}">
-                            {{ 'action.view'|trans }}
-                        </a>
                         <a href="{{ path('ingredients_edit', {'id': item.id}) }}" class="mdc-button" title="{{ 'action.edit'|trans }}">
                             {{ 'action.edit'|trans }}
                         </a>
@@ -35,13 +46,9 @@
         <hr class="mdc-list-divider">
 
         <div class="navigation text-center">
-            {{ pagerfanta(ingredients, 'twitter_bootstrap3_translated', { routeName: ('recipes_index_paginated') }) }}
+            {{ pagerfanta(ingredients, 'twitter_bootstrap3_translated', { routeName: ('ingredients_index_paginated') }) }}
         </div>
 
-        <button class="mdc-button">
-            <i class="material-icons mdc-button__icon" aria-hidden="true">favorite</i>
-            Button
-        </button>
 
     {% else %}
         <p>

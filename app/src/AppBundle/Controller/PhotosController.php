@@ -15,6 +15,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 /**
  * Class PhotosController.
@@ -23,6 +25,21 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PhotosController extends Controller
 {
+
+    /**
+     * Authentication Checker.
+     *
+     * @var \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface|null $security
+     */
+    protected $authorizationChecker = null;
+
+    /**
+     * Token storage.
+     *
+     * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface|null $tokenStorage
+     */
+    protected $tokenStorage = null;
+
     /**
      * Photos repository.
      *
@@ -42,11 +59,15 @@ class PhotosController extends Controller
      *
      * @param \AppBundle\Repository\PhotosRepository $photosRepository Photos repository
      * @param \AppBundle\Repository\RecipesRepository $recipesRepository Recipes repository
+     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
+     * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      */
-    public function __construct(PhotosRepository $photosRepository, RecipesRepository $recipesRepository)
+    public function __construct(PhotosRepository $photosRepository, RecipesRepository $recipesRepository, AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage)
     {
         $this->photosRepository = $photosRepository;
         $this->recipesRepository = $recipesRepository;
+        $this->authorizationChecker = $authorizationChecker;
+        $this->tokenStorage = $tokenStorage;
     }
 
     /**
@@ -70,12 +91,17 @@ class PhotosController extends Controller
      */
     public function indexAction($page)
     {
-        $photos = $this->photosRepository->findAllPaginated($page);
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $photos = $this->photosRepository->findAllPaginated($page);
 
-        return $this->render(
-            'photos/index.html.twig',
-            ['photos' => $photos]
-        );
+            return $this->render(
+                'photos/index.html.twig',
+                ['photos' => $photos]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction');
+            return $response;
+        }
 
     }
     /**
@@ -94,15 +120,20 @@ class PhotosController extends Controller
      */
     public function viewAction(Photo $photo)
     {
-        $recipes = $photo->getRecipes();
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $recipes = $photo->getRecipes();
 
-        return $this->render(
-            'photos/view.html.twig',
-            [
-                'photo' => $photo,
-                'recipes' => $recipes,
-                ]
-        );
+            return $this->render(
+                'photos/view.html.twig',
+                [
+                    'photo' => $photo,
+                    'recipes' => $recipes,
+                    ]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction');
+            return $response;
+        }
 
     }
 
@@ -123,24 +154,32 @@ class PhotosController extends Controller
      */
     public function addAction(Request $request)
     {
-        $photo = new Photo();
-        $form = $this->createForm(PhotoType::class, $photo);
-        $form->handleRequest($request);
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $photo = new Photo();
+            $form = $this->createForm(PhotoType::class, $photo);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->photosRepository->save($photo);
-            $this->addFlash('success', 'message.created_successfully');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->photosRepository->save($photo);
+                $this->addFlash('success', 'message.created_successfully');
 
-            return $this->redirectToRoute('photos_index');
+                return $this->redirectToRoute('photos_index');
+            }
+
+            return $this->render(
+                'photos/add.html.twig',
+                [
+                    'photo' => $photo,
+                    'form' => $form->createView(),
+                ]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+                $request
+            ));
+            return $response;
         }
 
-        return $this->render(
-            'photos/add.html.twig',
-            [
-                'photo' => $photo,
-                'form' => $form->createView(),
-            ]
-        );
     }
 
     /**
@@ -162,23 +201,31 @@ class PhotosController extends Controller
      */
     public function editAction(Request $request, Photo $photo)
     {
-        $form = $this->createForm(PhotoType::class, $photo);
-        $form->handleRequest($request);
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $form = $this->createForm(PhotoType::class, $photo);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->photosRepository->save($photo);
-            $this->addFlash('success', 'message.modified_successfully');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->photosRepository->save($photo);
+                $this->addFlash('success', 'message.modified_successfully');
 
-            return $this->redirectToRoute('photos_index');
+                return $this->redirectToRoute('photos_index');
+            }
+
+            return $this->render(
+                'photos/edit.html.twig',
+                [
+                    'photo' => $photo,
+                    'form' => $form->createView(),
+                ]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+                $request
+            ));
+            return $response;
         }
 
-        return $this->render(
-            'photos/edit.html.twig',
-            [
-                'photo' => $photo,
-                'form' => $form->createView(),
-            ]
-        );
     }
 
     /**
@@ -200,22 +247,29 @@ class PhotosController extends Controller
      */
     public function deleteAction(Request $request, Photo $photo)
     {
-        $form = $this->createForm(FormType::class, $photo); //nie Photo ???
-        $form->handleRequest($request);
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $form = $this->createForm(FormType::class, $photo); //nie Photo ???
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->photosRepository->delete($photo);
-            $this->addFlash('success', 'message.deleted_successfully');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->photosRepository->delete($photo);
+                $this->addFlash('success', 'message.deleted_successfully');
 
-            return $this->redirectToRoute('photos_index');
+                return $this->redirectToRoute('photos_index');
+            }
+
+            return $this->render(
+                'photos/delete.html.twig',
+                [
+                    'photo' => $photo,
+                    'form' => $form->createView(),
+                ]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+                $request
+            ));
+            return $response;
         }
-
-        return $this->render(
-            'photos/delete.html.twig',
-            [
-                'photo' => $photo,
-                'form' => $form->createView(),
-            ]
-        );
     }
 }

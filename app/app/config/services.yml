@@ -46,6 +46,10 @@ services:
                        factory: 'doctrine.orm.entity_manager:getRepository'
                        arguments: ['AppBundle\Entity\Photo']
 
+    AppBundle\Repository\UsersRepository:
+                factory: 'doctrine.orm.entity_manager:getRepository'
+                arguments: ['UserBundle\Entity\User']
+
     AppBundle\Service\FileUploader:
             class: AppBundle\Service\FileUploader
             arguments: ['%photos_directory%']

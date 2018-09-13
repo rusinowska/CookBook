@@ -1,0 +1,8 @@
+{% include 'default/_formuser.html.twig' with {
+    page_title: 'title.user_add_self',
+    attr: {
+        method: 'post',
+        action: url('fos_user_registration_register')
+    },
+    back_to_homepage: 'home_index',
+} %}

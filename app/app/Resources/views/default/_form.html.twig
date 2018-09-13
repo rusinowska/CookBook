@@ -6,35 +6,49 @@
 
 {% block body %}
 
-    <h3 class="mdc-typography--headline4">
-        {% if page_title_param is defined %}{{ page_title|trans(page_title_param) }}{% else %}{{ page_title|trans }}{% endif %}
-    </h3>
+    <div class="mdc-card mdc-card-form">
 
-    {{ form_start(form, { method: attr.method|default('post'), action: attr.action }) }}
-    {% if false == form.vars.valid %}
-        {% include 'default/_single_flash_message.html.twig' with {
-            type: 'danger',
-            message: 'message.form_error',
-        }%}
-    {% endif %}
-    <div class="">
+        <h3 class="mdc-typography--headline4">
+            {% if page_title_param is defined %}{{ page_title|trans(page_title_param) }}{% else %}{{ page_title|trans }}{% endif %}
+        </h3>
 
-    {{ form_widget(form) }}
-    </div>
-
-    <div class="col nav-actions-list">
-        <input type="submit" value="{{ submit_label|default('action.save'|trans) }}" class="mdc-button mdc-button--raised" />
-
-        {% if back_to_list_path|default(false) %}
-            <div>
-                <a href="{{ path(back_to_list_path) }}" class="mdc-button">
-                    {{ 'action.back_to_list'|trans }}
-                </a>
-            </div>
+        {% if item_name is defined %}
+        <h4 class="mdc-typography--headline5"> {{ item_name }}</h4>
         {% endif %}
+
+        {{ form_start(form, { method: attr.method|default('post'), action: attr.action }) }}
+        {% if false == form.vars.valid %}
+            {% include 'default/_single_flash_message.html.twig' with {
+                type: 'danger',
+                message: 'message.form_error',
+            }%}
+        {% endif %}
+        <div class="">
+
+        {{ form_widget(form) }}
+        </div>
+
+        <div class="col nav-actions-list">
+            <input type="submit" value="{{ submit_label|default('action.save'|trans) }}" class="mdc-button mdc-button--raised" />
+
+
+        </div>
+
     </div>
 
+    {% if back_to_list_path|default(false) %}
 
+        <div class="row content-center">
+            <a href="{{ path(back_to_list_path) }}" class="mdc-button mdc-button-back is-center">
+                <i class="material-icons">
+                    arrow_back
+                </i>
+                {{ 'action.back_to_list'|trans }}
+
+            </a>
+        </div>
+
+    {% endif %}
 
     {{ form_end(form) }}
 
