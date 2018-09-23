@@ -10,7 +10,6 @@ use Pagerfanta\Adapter\DoctrineORMAdapter;
 use AppBundle\Entity\Recipe;
 use AppBundle\Entity\Ingredient;
 
-
 /**
  * Class RecipesRepository.
  *
@@ -18,11 +17,10 @@ use AppBundle\Entity\Ingredient;
  */
 class RecipesRepository extends EntityRepository
 {
-
     /**
      * Find single record by its id.
      *
-     * @param integer $id Single record index
+     * @param string $ingredient Single record index
      *
      * @return array|null Result
      */
@@ -80,6 +78,67 @@ class RecipesRepository extends EntityRepository
     }
 
     /**
+     * Gets all records paginated by category.
+     *
+     * @param int $category Searched category
+     * @param int $page     Page number
+     *
+     * @return \Pagerfanta\Pagerfanta Result
+     */
+    public function findAllPaginatedByCategory($category, $page = 1)
+    {
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($this->queryAllByCategory($category), false));
+        $paginator->setMaxPerPage(Recipe::NUM_ITEMS);
+        $paginator->setCurrentPage($page);
+
+        return $paginator;
+    }
+
+    /**
+     * Gets all records paginated by ingredient.
+     *
+     * @param int $ingredient Searched tag
+     * @param int $page       Page number
+     *
+     * @return \Pagerfanta\Pagerfanta Result
+     */
+    public function findAllPaginatedByIngredient($ingredient, $page = 1)
+    {
+        $paginator = new Pagerfanta(new DoctrineORMAdapter($this->queryAllByIngredient($ingredient), false));
+        $paginator->setMaxPerPage(Recipe::NUM_ITEMS);
+        $paginator->setCurrentPage($page);
+
+        return $paginator;
+    }
+
+
+    /**
+     * Save entity.
+     *
+     * @param \AppBundle\Entity\Recipe $recipe Recipe entity
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function save(Recipe $recipe)
+    {
+        $this->_em->persist($recipe);
+        $this->_em->flush($recipe);
+    }
+
+    /**
+     * Delete entity.
+     *
+     * @param \AppBundle\Entity\Recipe $recipe Recipe entity
+     *
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function delete(Recipe $recipe)
+    {
+        $this->_em->remove($recipe);
+        $this->_em->flush();
+    }
+
+    /**
      * Query all entities.
      *
      * @return \Doctrine\ORM\QueryBuilder
@@ -110,28 +169,43 @@ class RecipesRepository extends EntityRepository
     }
 
     /**
-     * Save entity.
+     * Query all entities by category.
      *
-     * @param \AppBundle\Entity\Recipe $recipe Recipe entity
+     * @param int $user Searched catgeory id
      *
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function save(Recipe $recipe)
+    protected function queryAllByCategory($user)
     {
-        $this->_em->persist($recipe);
-        $this->_em->flush($recipe);
+        $queryAllByCategory = $this->createQueryBuilder('g')
+            ->select("g")
+            ->where('g.category = :category')
+            ->setParameter('category', $user)
+            ->getQuery();
+
+        $searched = $queryAllByCategory;
+
+        return $searched;
     }
 
     /**
-     * Delete entity.
+     * Query all entities by ingredient.
      *
-     * @param \AppBundle\Entity\Recipe $recipe Recipe entity
+     * @param int $ingredient Searched ingredient id
      *
-     * @throws \Doctrine\ORM\OptimisticLockException
+     * @return \Doctrine\ORM\QueryBuilder
      */
-    public function delete(Recipe $recipe)
+    protected function queryAllByIngredient($ingredient)
     {
-        $this->_em->remove($recipe);
-        $this->_em->flush();
+        $queryAllByIngredient = $this->createQueryBuilder('g')
+            ->select("g")
+            ->leftJoin("g.ingredients", "ingredients")
+            ->where('ingredients.id = :ingredient')
+            ->setParameter('ingredient', $ingredient)
+            ->getQuery();
+
+        $searched = $queryAllByIngredient;
+
+        return $searched;
     }
 }

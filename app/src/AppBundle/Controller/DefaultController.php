@@ -1,7 +1,8 @@
 <?php
-
+/**
+ * Default controller.
+ */
 namespace AppBundle\Controller;
-
 
 use Doctrine\ORM\EntityManager;
 use AppBundle\Repository\RecipesRepository;
@@ -14,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
+/**
+ * Class DefaultController.
+ */
 class DefaultController extends Controller
 {
     /**
@@ -33,16 +37,6 @@ class DefaultController extends Controller
     {
         $this->recipesRepository = $recipesRepository;
     }
-//    /**
-//     * @Route("/", name="homepage")
-//     */
-//    public function indexAction(Request $request)
-//    {
-//        // replace this example code with whatever you need
-//        return $this->render('default/index.html.twig', [
-//            'base_dir' => realpath($this->getParameter('kernel.project_dir')).DIRECTORY_SEPARATOR,
-//        ]);
-//    }
 
         /**
          * Index action.
@@ -64,14 +58,14 @@ class DefaultController extends Controller
          *
          * @Method({"GET"})
          */
-        public function indexAction($page)
-        {
+    public function indexAction($page)
+    {
 
-            $recipes = $this->recipesRepository->findAllPaginated($page);
+        $recipes = $this->recipesRepository->findAllPaginated($page);
 
-            return $this->render(
-                'home/home.html.twig',
-                ['recipes' => $recipes]
-            );
-        }
+        return $this->render(
+            'home/home.html.twig',
+            ['recipes' => $recipes]
+        );
+    }
 }

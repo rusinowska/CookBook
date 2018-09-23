@@ -4,7 +4,6 @@
  */
 namespace AppBundle\Controller;
 
-
 use AppBundle\Entity\Ingredient;
 use AppBundle\Entity\Recipe;
 use AppBundle\Entity\Photo;
@@ -76,11 +75,11 @@ class RecipesController extends Controller
     /**
      * RecipesController constructor.
      *
-     * @param \AppBundle\Repository\RecipesRepository $recipesRepository Recipes repository
-     * @param \AppBundle\Repository\RecipesRepository $ingredientsRepository Ingredients repository
-     * @param \AppBundle\Repository\RecipesRepository $categoriesRepository Categories repository
-     * @param \AppBundle\Repository\RecipesRepository $photosRepository Photos repository
-     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
+     * @param \AppBundle\Repository\RecipesRepository                                             $recipesRepository     Recipes repository
+     * @param \AppBundle\Repository\RecipesRepository                                             $ingredientsRepository Ingredients repository
+     * @param \AppBundle\Repository\RecipesRepository                                             $categoriesRepository  Categories repository
+     * @param \AppBundle\Repository\RecipesRepository                                             $photosRepository      Photos repository
+     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface        $authorizationChecker
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      */
     public function __construct(RecipesRepository $recipesRepository, IngredientsRepository $ingredientsRepository, CategoriesRepository $categoriesRepository, PhotosRepository $photosRepository, AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage)
@@ -130,6 +129,7 @@ class RecipesController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction');
+
             return $response;
         }
     }
@@ -166,6 +166,7 @@ class RecipesController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction');
+
             return $response;
         }
     }
@@ -179,18 +180,13 @@ class RecipesController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
      * @Route(
-     *     "/user",
+     *     "/user/{user}",
      *     defaults={"page": 1},
      *     name="recipes_user",
      * )
-     * @Route(
-     *     "/page/{page}",
-     *     requirements={"page": "[1-9]\d*"},
-     *     name="recipes_user_paginated",
-     * )
      *
      * @Route(
-     *     "/page/{page}/user/{user}",
+     *     "/user/{user}/page/{page}",
      *     requirements={"page": "[1-9]\d*"},
      *     defaults={"page": 1},
      *     name="recipes_user_results",
@@ -200,21 +196,119 @@ class RecipesController extends Controller
      */
     public function viewbyuserAction($page, $user = null)
     {
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $searched = $this->recipesRepository->findBy(['user' => $user]);
 
-        $searched = $this->recipesRepository->findBy(['user' => $user]);
+            if (empty($searched)) {
+                $this->addFlash('danger', 'message.search_result_empty');
+                $recipes = $this->recipesRepository->findAllPaginated($page);
+            } else {
+                $recipes = $this->recipesRepository->findAllPaginatedByUser($user, $page);
+            }
 
-        if (empty($searched)) {
-            $this->addFlash('danger', 'message.search_result_empty');
-            $recipes = $this->recipesRepository->findAllPaginated($page);
-
+            return $this->render(
+                'recipes/index.html.twig',
+                ['recipes' => $recipes]
+            );
         } else {
-            $recipes = $this->recipesRepository->findAllPaginatedByUser($user, $page);
-        }
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+                $request,
+            ));
 
-        return $this->render(
-            'recipes/index.html.twig',
-            ['recipes' => $recipes]
-        );
+            return $response;
+        }
+    }
+
+    /**
+     * Show results by category.
+     *
+     * @param integer $page     Current page number
+     * @param integer $category Searched category id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP Response
+     *
+     * @Route(
+     *     "/category/{category}",
+     *     defaults={"page": 1},
+     *     name="recipes_category",
+     * )
+     *
+     * @Route(
+     *     "/category/{category}/page/{page}",
+     *     requirements={"page": "[1-9]\d*"},
+     *     defaults={"page": 1},
+     *     name="recipes_category_results",
+     * )
+     *
+     * @Method({"GET"})
+     */
+    public function viewbycategoryAction($page, $category = null)
+    {
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $searched = $this->recipesRepository->findBy(['category' => $category]);
+
+            if (empty($searched)) {
+                $this->addFlash('danger', 'message.search_result_empty');
+                $recipes = $this->recipesRepository->findAllPaginated($page);
+            } else {
+                $recipes = $this->recipesRepository->findAllPaginatedByCategory($category, $page);
+            }
+
+            return $this->render(
+                'recipes/index.html.twig',
+                ['recipes' => $recipes]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+                $request,
+            ));
+
+            return $response;
+        }
+    }
+
+    /**
+     * Show results by ingredient.
+     *
+     * @param integer $page       Current page number
+     * @param integer $ingredient Searched ingredient id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response HTTP Response
+     *
+     * @Route(
+     *     "/ingredient/{ingredient}",
+     *     defaults={"page": 1},
+     *     name="recipes_ingredient",
+     * )
+     *
+     * @Route(
+     *     "/ingredient/{ingredient}/page/{page}",
+     *     requirements={"page": "[1-9]\d*"},
+     *     defaults={"page": 1},
+     *     name="recipes_ingredient_results",
+     * )
+     *
+     * @Method({"GET"})
+     */
+    public function viewbyingredientAction($page, $ingredient = null)
+    {
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $recipes = $this->recipesRepository->findAllPaginatedByIngredient($ingredient, $page);
+            $ingredientelement = $this->ingredientsRepository->findOneById($ingredient);
+
+            $filter = "ingredient";
+
+            return $this->render(
+                'recipes/index.html.twig',
+                ['recipes' => $recipes, 'ingredient' => $ingredientelement, 'filter' => $filter]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+                $request,
+            ));
+
+            return $response;
+        }
     }
 
     /**
@@ -260,10 +354,11 @@ class RecipesController extends Controller
                     'form' => $form->createView(),
                 ]
             );
-        }else {
+        } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
         }
     }
@@ -272,7 +367,7 @@ class RecipesController extends Controller
      * Edit action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
-     * @param \AppBundle\Entity\Recipe                     $recipe     Recipe entity
+     * @param \AppBundle\Entity\Recipe                  $recipe  Recipe entity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -287,32 +382,39 @@ class RecipesController extends Controller
      */
     public function editAction(Request $request, Recipe $recipe)
     {
-        $form = $this->createForm(RecipeType::class, $recipe);
-        $form->handleRequest($request);
+        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $form = $this->createForm(RecipeType::class, $recipe);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->recipesRepository->save($recipe);
-            $this->addFlash('success', 'message.modified_successfully');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->recipesRepository->save($recipe);
+                $this->addFlash('success', 'message.modified_successfully');
 
-            //return $this->redirectToRoute('recipes_index');
 
-            return $this->redirectToRoute('recipes_view', ['id' => $recipe->getId()]);
+                return $this->redirectToRoute('recipes_view', ['id' => $recipe->getId()]);
+            }
+
+            return $this->render(
+                'recipes/edit.html.twig',
+                [
+                    'recipe' => $recipe,
+                    'form' => $form->createView(),
+                ]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+                $request,
+            ));
+
+            return $response;
         }
-
-        return $this->render(
-            'recipes/edit.html.twig',
-            [
-                'recipe' => $recipe,
-                'form' => $form->createView(),
-            ]
-        );
     }
 
     /**
      * Delete action.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
-     * @param \AppBundle\Entity\Recipe                     $recipe     Recipe entity
+     * @param \AppBundle\Entity\Recipe                  $recipe  Recipe entity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -327,22 +429,30 @@ class RecipesController extends Controller
      */
     public function deleteAction(Request $request, Recipe $recipe)
     {
-        $form = $this->createForm(FormType::class, $recipe); //nie Recipe ???
-        $form->handleRequest($request);
+        if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
+            $form = $this->createForm(FormType::class, $recipe);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->recipesRepository->delete($recipe);
-            $this->addFlash('success', 'message.deleted_successfully');
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->recipesRepository->delete($recipe);
+                $this->addFlash('success', 'message.deleted_successfully');
 
-            return $this->redirectToRoute('recipes_index');
+                return $this->redirectToRoute('recipes_index');
+            }
+
+            return $this->render(
+                'recipes/delete.html.twig',
+                [
+                    'recipe' => $recipe,
+                    'form' => $form->createView(),
+                ]
+            );
+        } else {
+            $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+                $request,
+            ));
+
+            return $response;
         }
-
-        return $this->render(
-            'recipes/delete.html.twig',
-            [
-                'recipe' => $recipe,
-                'form' => $form->createView(),
-            ]
-        );
     }
 }

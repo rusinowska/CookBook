@@ -1,3 +1,10 @@
+{
+"version": 3,
+"mappings": "AAAA,UAAU;EACR,MAAM,EAAE,CAAC;EACT,UAAU,EAAE,OAAO;;AAYrB,UAAU;EACR,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,KAAK;EACb,eAAe,EAAE,KAAK;;AAExB,gBAAgB;EACd,gBAAgB,EAAE,gLAAgL;;AAEpM,UAAU;EACR,WAAW,EAAE,IAAI;EACjB,YAAY,EAAE,IAAI;;AAEpB,eAAe;EACb,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,GAAG;EACnB,eAAe,EAAE,MAAM;;AAEzB,mBAAmB;EACjB,WAAW,EAAE,IAAI;EACjB,YAAY,EAAE,IAAI;EAClB,SAAS,EAAE,KAAK;;AAQlB,QAAQ;EACN,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,KAAK;;AAEd,cAAc;EACZ,OAAO,EAAE,SAAS;EAClB,UAAU,EAAE,IAAI;;AAGlB,iBAAiB;EACf,OAAO,EAAE,IAAI;;AAEf,mBAAmB;EACjB,OAAO,EAAE,IAAI;;AAEf,cAAc;EACZ,0BAA0B,CAAC,MAAM;;AAOnC,GAAG;EACD,KAAK,EAAE,IAAI;EACX,gBAAgB,EAAE,OAAO;;AAE3B,qBAAqB;EACnB,OAAO,EAAE,KAAK;;AAEhB,eAAe;EACb,SAAS,EAAE,MAAM;;AAInB,iBAAiB;EACf,MAAM,EAAE,kBAAkB;;AAE5B,mBAAmB;EACjB,QAAQ,EAAE,QAAQ;EAClB,OAAO,EAAE,mBAAmB;EAC5B,aAAa,EAAE,GAAG;;AAMlB,cAAE;EACA,OAAO,EAAE,aAAa;EACtB,MAAM,EAAE,KAAK;AACf,qBAAS;EACP,gBAAgB,EAAE,WAAW;EAC7B,KAAK,EAxFG,OAAO;EAyFf,WAAW,EAAE,IAAI;;AAErB;YAAa;EAEX,KAAK,EA7FK,OAAO;;AA+FnB,QAAQ;EACN,OAAO,EAAE,IAAI;;AAMf,0BAA0B;EACxB,KAAK,EAvGK,OAAO;;AAyGnB;sCAAmC;EAEjC,gBAAgB,EA3GN,OAAO;EA4GjB,KAAK,EAAE,OAAO;;AAIhB,gBAAgB;EACd,UAAU,EAAE,IAAI;;AAQlB,WAAW;EACT,aAAa,EAAE,IAAI;;AAGrB,0DAA0D;EACxD,OAAO,EAAE,CAAC;;AAEZ,eAAe;EACb,OAAO,EAAE,IAAI;EACb,KAAK,EAAE,IAAI;EACX,SAAS,EAAE,IAAI;EACf,YAAY,EAAE,IAAI;EAClB,WAAW,EAAE,IAAI;;AAEnB,qBAAqB;EACnB,WAAW,EAAE,KAAK;EAClB,UAAU,EAAE,GAAG;;AAMjB,cAAc;EACZ,MAAM,EAAE,eAAe;EACvB,cAAc,EAAE,SAAS;;AAE3B,mBAAmB;EACjB,MAAM,EAAE,wBAAwB;EAChC,SAAS,EAAE,KAAK;;AAElB,WAAW;EACT,aAAa,EAAE,IAAI;;AAErB,aAAa;EACX,gBAAgB,EAAE,OAAO;EACzB,KAAK,EAAE,KAAK;;AAGd,mBAAmB;EACjB,KAAK,EAAE,KAAK;;AAEd,SAAS;EACP,OAAO,EAAE,IAAI;;AAEf,mBAAmB;EACjB,OAAO,EAAE,IAAI;;AAKf,cAAc;EACZ,MAAM,EAAE,eAAe",
+"sources": ["../sass/style.sass"],
+"names": [],
+"file": "style.css"
+}
 html, body {
   margin: 0;
   background: #f3f2f2; }
@@ -8,7 +15,8 @@ html, body {
   background-size: cover; }
 
 .full-page-login {
-  background-image: url("https://images.unsplash.com/photo-1491185841098-9ce20f966624?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f83a8cf7b92564946950e478c9606e4f&auto=format&fit=crop&w=2689&q=80"); }
+  background-image: url("https://images.unsplash.com/photo-1491185841098-9ce20f966624?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f83a8cf7b92564946950e478c9606e4f&auto=format&fit=crop&w=2689&q=80");
+  background-size: 120%; }
 
 .is-center {
   margin-left: auto;
@@ -19,10 +27,22 @@ html, body {
   flex-direction: row;
   justify-content: center; }
 
+.content-center-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+
 .page__main-section {
   margin-left: auto;
   margin-right: auto;
-  max-width: 900px; }
+  max-width: 940px;
+  padding: 1rem; }
+
+.typography-negative {
+  color: #fff; }
+
+.typography-center {
+  text-align: center; }
 
 .my-card {
   height: auto;
@@ -128,115 +148,30 @@ nav .brand-logo {
 #recipe_ingredients {
   display: flex; }
 
-.my-card-login {
+.center-full {
   margin: 20% auto 0 auto; }
 
-/*# sourceMappingURL=style.css.map */
+.photo-button {
+  display: block;
+  margin: 1rem; }
 
-{
-"version": 3,
-"mappings": "AAAA,UAAU;EACR,MAAM,EAAE,CAAC;EACT,UAAU,EAAE,OAAO;;AAYrB,UAAU;EACR,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,KAAK;EACb,eAAe,EAAE,KAAK;;AAExB,gBAAgB;EACd,gBAAgB,EAAE,gLAAgL;;AAEpM,UAAU;EACR,WAAW,EAAE,IAAI;EACjB,YAAY,EAAE,IAAI;;AAEpB,eAAe;EACb,OAAO,EAAE,IAAI;EACb,cAAc,EAAE,GAAG;EACnB,eAAe,EAAE,MAAM;;AAEzB,mBAAmB;EACjB,WAAW,EAAE,IAAI;EACjB,YAAY,EAAE,IAAI;EAClB,SAAS,EAAE,KAAK;;AAQlB,QAAQ;EACN,MAAM,EAAE,IAAI;EACZ,KAAK,EAAE,KAAK;;AAEd,cAAc;EACZ,OAAO,EAAE,SAAS;EAClB,UAAU,EAAE,IAAI;;AAGlB,iBAAiB;EACf,OAAO,EAAE,IAAI;;AAEf,mBAAmB;EACjB,OAAO,EAAE,IAAI;;AAEf,cAAc;EACZ,0BAA0B,CAAC,MAAM;;AAOnC,GAAG;EACD,KAAK,EAAE,IAAI;EACX,gBAAgB,EAAE,OAAO;;AAE3B,qBAAqB;EACnB,OAAO,EAAE,KAAK;;AAEhB,eAAe;EACb,SAAS,EAAE,MAAM;;AAInB,iBAAiB;EACf,MAAM,EAAE,kBAAkB;;AAE5B,mBAAmB;EACjB,QAAQ,EAAE,QAAQ;EAClB,OAAO,EAAE,mBAAmB;EAC5B,aAAa,EAAE,GAAG;;AAMlB,cAAE;EACA,OAAO,EAAE,aAAa;EACtB,MAAM,EAAE,KAAK;AACf,qBAAS;EACP,gBAAgB,EAAE,WAAW;EAC7B,KAAK,EAxFG,OAAO;EAyFf,WAAW,EAAE,IAAI;;AAErB;YAAa;EAEX,KAAK,EA7FK,OAAO;;AA+FnB,QAAQ;EACN,OAAO,EAAE,IAAI;;AAMf,0BAA0B;EACxB,KAAK,EAvGK,OAAO;;AAyGnB;sCAAmC;EAEjC,gBAAgB,EA3GN,OAAO;EA4GjB,KAAK,EAAE,OAAO;;AAIhB,gBAAgB;EACd,UAAU,EAAE,IAAI;;AAQlB,WAAW;EACT,aAAa,EAAE,IAAI;;AAGrB,0DAA0D;EACxD,OAAO,EAAE,CAAC;;AAEZ,eAAe;EACb,OAAO,EAAE,IAAI;EACb,KAAK,EAAE,IAAI;EACX,SAAS,EAAE,IAAI;EACf,YAAY,EAAE,IAAI;EAClB,WAAW,EAAE,IAAI;;AAEnB,qBAAqB;EACnB,WAAW,EAAE,KAAK;EAClB,UAAU,EAAE,GAAG;;AAMjB,cAAc;EACZ,MAAM,EAAE,eAAe;EACvB,cAAc,EAAE,SAAS;;AAE3B,mBAAmB;EACjB,MAAM,EAAE,wBAAwB;EAChC,SAAS,EAAE,KAAK;;AAElB,WAAW;EACT,aAAa,EAAE,IAAI;;AAErB,aAAa;EACX,gBAAgB,EAAE,OAAO;EACzB,KAAK,EAAE,KAAK;;AAGd,mBAAmB;EACjB,KAAK,EAAE,KAAK;;AAEd,SAAS;EACP,OAAO,EAAE,IAAI;;AAEf,mBAAmB;EACjB,OAAO,EAAE,IAAI;;AAKf,cAAc;EACZ,MAAM,EAAE,eAAe",
-"sources": ["../sass/style.sass"],
-"names": [],
-"file": "style.css"
-}
-html, body {
-  margin: 0;
-  background: #f3f2f2; }
+input[type=file] {
+  background: red; }
 
-.my-card {
-  height: auto;
-  width: 350px; }
-
-.page__main-section {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 900px; }
-
-.cb-card__primary {
-  padding: 1rem; }
-
-.cb-card__secondary {
-  padding: 1rem; }
+.mdc-snackbar {
+  z-index: 10; }
 
 .mdc-grid-tile {
-  --mdc-grid-list-tile-width: 300px; }
+  margin: 6px 0;
+  padding: 0 6px; }
 
-nav a.sidenav-trigger {
-  display: block; }
+.mdc-chip-set {
+  padding: 0; }
 
-nav .brand-logo {
-  font-size: 1.5rem; }
+.cb-card__secondary {
+  padding: 0rem 1rem; }
 
-[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-  opacity: 1; }
-
-nav {
-  color: #fff;
-  background-color: #9ccc65; }
-
-.sidenav .user-view {
-  position: relative;
-  padding: 84px 32px 32px 32px;
-  margin-bottom: 8px; }
-
-.nav-actions-list {
-  margin: 2.8rem 0 1.68rem 0; }
-
-.mdc-button--raised:not(:disabled),
-.mdc-button--unelevated:not(:disabled) {
-  background-color: #6b9b37; }
-
-.category-name {
-  margin: 1.8rem 0 0rem 0;
-  text-transform: uppercase; }
-
-.recipe-description {
-  margin: 2.8rem auto 1.68rem auto;
-  max-width: 700px; }
-
-.recipe-box {
-  margin-bottom: 4rem; }
-
-.activetoggle {
-  background-color: #6b9b37;
-  color: white; }
-
-.activetoggle:hover {
-  color: white; }
-
-.hidetile {
-  display: none; }
-
-#recipe_ingredients {
-  display: flex; }
-
-.checkbox label {
-  display: flex;
-  width: auto;
-  min-width: 60px;
-  padding-left: 20px;
-  margin-left: 10px; }
-
-.checkbox label input {
-  margin-left: -20px;
-  margin-top: 3px; }
-
-.form-group {
-  margin-bottom: 24px; }
-
-.mdc-card-form {
-  padding: 1rem 2rem;
-  margin-top: 2rem; }
-
-.mdc-button-back {
-  margin-top: 2rem; }
-
-.is-center {
-  margin-left: auto;
-  margin-right: auto; }
-
-/*# sourceMappingURL=styles.css.map */
+/*# sourceMappingURL=style.css.map */
 
 {
 "version": 3,

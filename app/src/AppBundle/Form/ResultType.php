@@ -39,7 +39,7 @@ class ResultType extends AbstractType
                 'label' => 'label.ingredient',
                 'required' => false,
                 'expanded' => true,
-                'multiple' => true
+                'multiple' => true,
             ]
         );
     }

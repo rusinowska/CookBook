@@ -25,22 +25,6 @@ use Symfony\Component\Form\FormEvents;
  */
 class RecipeType extends AbstractType
 {
-//    /**
-//     * Ingredients repository.
-//     *
-//     * @var \AppBundle\Repository\IngredientsRepository|null $ingredientsRepository
-//     */
-//    protected $ingredientsRepository = null;
-//
-//    /**
-//     * RecipeType constructor.
-//     *
-//     * @param IngredientsRepository $ingredientsRepository Ingredient repository
-//     */
-//    public function __construct(IngredientsRepository $ingredientsRepository)
-//    {
-//        $this->ingredientsRepository= $ingredientsRepository;
-//    }
     /**
      * {@inheritdoc}
      *
@@ -57,7 +41,7 @@ class RecipeType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'max_length' => 128,
-                    'class' => 'input-field'
+                    'class' => 'input-field',
                 ],
             ]
         );
@@ -69,7 +53,7 @@ class RecipeType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'max_length' => 10000,
-                    'class' => 'materialize-textarea'
+                    'class' => 'materialize-textarea',
                 ],
             ]
         );
@@ -86,15 +70,11 @@ class RecipeType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'attr' => [
-                    'class' => 'mdc-chip-set'],
+                    'class' => 'mdc-chip-set', ],
                 'choice_attr' => [
-                    'class' => 'mdc-chip'],
+                    'class' => 'mdc-chip', ],
             ]
         );
-
-//        $builder->get('ingredients')->addModelTransformer(
-//            new IngredientsDataTransformer($this->$ingredientsRepository)
-//        );
 
         $builder->add(
             'category',
@@ -118,8 +98,8 @@ class RecipeType extends AbstractType
                 'entry_type' => PhotoType::class,
                 'entry_options' => array('label' => false),
                 'allow_add' => true,
-        ));
-
+            )
+        );
     }
 
     /**

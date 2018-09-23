@@ -25,7 +25,7 @@ class UsersController extends Controller
     /**
      * Index action.
      *
-     * @param integer $page Current page number
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -53,8 +53,9 @@ class UsersController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
         }
     }
@@ -62,8 +63,8 @@ class UsersController extends Controller
     /**
      * View action.
      *
-     * @param User $user User entity
-     * @param \Symfony\Component\HttpFoundation\Request $request   HTTP      Request
+     * @param User                                      $user    User entity
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP      Request
      *
      * @return \Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -83,8 +84,9 @@ class UsersController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
         }
     }
@@ -92,8 +94,8 @@ class UsersController extends Controller
     /**
      * Delete action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request   HTTP      Request
-     * @param \UserBundle\Entity\User                    $user      User      entity
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP      Request
+     * @param \UserBundle\Entity\User                   $user    User      entity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -129,8 +131,9 @@ class UsersController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
         }
     }
@@ -138,8 +141,8 @@ class UsersController extends Controller
     /**
      * Promote action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request   HTTP      Request
-     * @param \UserBundle\Entity\User                    $user      User      entity
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP      Request
+     * @param \UserBundle\Entity\User                   $user    User      entity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -154,24 +157,25 @@ class UsersController extends Controller
      */
     public function promoteUserAction(Request $request, User $user)
     {
-        if ($this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN') != 'Access Denied.') {
+
             $userManager = $this->get('fos_user.user_manager');
             $user->addRole('ROLE_SUPER_ADMIN');
             $userManager->updateUser($user);
+
             return $this->forward('UserBundle\Controller\UsersController::indexAction');
-        } else {
+
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
-        }
     }
 
     /**
      * Demote action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request   HTTP      Request
-     * @param \UserBundle\Entity\User                    $user      User      entity
+     * @param \Symfony\Component\HttpFoundation\Request $request HTTP      Request
+     * @param \UserBundle\Entity\User                   $user    User      entity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -190,12 +194,50 @@ class UsersController extends Controller
             $userManager = $this->get('fos_user.user_manager');
             $user->removeRole('ROLE_SUPER_ADMIN');
             $userManager->updateUser($user);
+
             return $this->forward('UserBundle\Controller\UsersController::indexAction');
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
         }
     }
+
+//    /**
+//     * Change password action.
+//     *
+//     * @param \Symfony\Component\HttpFoundation\Request $request   HTTP      Request
+//     * @param \UserBundle\Entity\User                    $user      User      entity
+//     *
+//     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response HTTP Response
+//     *
+//     * @throws \Doctrine\ORM\OptimisticLockException
+//     *
+//     * @Route(
+//     *     "/{id}/password",
+//     *     requirements={"id": "[1-9]\d*"},
+//     *     name="users_changepass",
+//     * )
+//     * @Method({"GET", "POST"})
+//     */
+//    public function changepassUserAction(Request $request, User $user)
+//    {
+//        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+//            $active_user_id = $this->tokenStorage->getToken()->getUser()->getId();
+//            $user_id = $user->getUser()->getId();
+//
+//            if(($active_user_id == $user_id ) || ($this->denyAccessUnlessGranted('ROLE_SUPER_ADMIN') != 'Access Denied.')) {
+//                    $userManager = $this->get('fos_user.user_manager');
+//                    $userManager->updateUser($user);
+//                    return $this->forward('UserBundle\Controller\UsersController::indexAction');
+//            }else {
+//                $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
+//                    $request
+//                ));
+//                return $response;
+//            }
+//        }
+//    }
 }

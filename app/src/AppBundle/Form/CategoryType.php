@@ -32,10 +32,10 @@ class CategoryType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'max_length' => 128,
-                    'class' => 'mdc-text-field__input'
+                    'class' => 'mdc-text-field__input',
                 ],
                 'label_attr' => [
-                    'class' => 'mdc-floating-label'
+                    'class' => 'mdc-floating-label',
                 ],
             ]
         );

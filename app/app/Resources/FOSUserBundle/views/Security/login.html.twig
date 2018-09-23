@@ -5,15 +5,13 @@
 {% endblock %}
 
 {% block body %}
+
     {% if error %}
-        {% include 'default/_single_flash_message.html.twig' with {
+        {%  include 'default/_single_flash_message.html.twig' with {
             type: 'danger',
-            message: 'message.bad_credentials'|trans,
-        }%}
+            message: error|trans({}, 'FOSUserBundle')
+        } %}
     {% endif %}
-
-
-
 
 
     <div class="card my-card center-full">

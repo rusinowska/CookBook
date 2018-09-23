@@ -54,9 +54,9 @@ class IngredientsController extends Controller
     /**
      * IngredientsController constructor.
      *
-     * @param \AppBundle\Repository\IngredientsRepository $ingredientsRepository Ingredients repository
-     * @param \AppBundle\Repository\RecipesRepository $recipesRepository Recipes repository
-     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
+     * @param \AppBundle\Repository\IngredientsRepository                                         $ingredientsRepository Ingredients repository
+     * @param \AppBundle\Repository\RecipesRepository                                             $recipesRepository     Recipes repository
+     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface        $authorizationChecker
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      */
     public function __construct(IngredientsRepository $ingredientsRepository, RecipesRepository $recipesRepository, AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage)
@@ -93,10 +93,11 @@ class IngredientsController extends Controller
 
             return $this->render(
                 'ingredients/index.html.twig',
-                ['ingredients' => $ingredients,]
+                ['ingredients' => $ingredients, ]
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction');
+
             return $response;
         }
     }
@@ -128,6 +129,7 @@ class IngredientsController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction');
+
             return $response;
         }
     }
@@ -170,8 +172,9 @@ class IngredientsController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
         }
     }
@@ -179,8 +182,8 @@ class IngredientsController extends Controller
     /**
      * Edit action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
-     * @param \AppBundle\Entity\Ingredient                     $ingredient     Ingredient entity
+     * @param \Symfony\Component\HttpFoundation\Request $request    HTTP Request
+     * @param \AppBundle\Entity\Ingredient              $ingredient Ingredient entity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -215,8 +218,9 @@ class IngredientsController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
         }
     }
@@ -224,8 +228,8 @@ class IngredientsController extends Controller
     /**
      * Delete action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
-     * @param \AppBundle\Entity\Ingredient                     $ingredient     Ingredient entity
+     * @param \Symfony\Component\HttpFoundation\Request $request    HTTP Request
+     * @param \AppBundle\Entity\Ingredient              $ingredient Ingredient entity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -241,7 +245,7 @@ class IngredientsController extends Controller
     public function deleteAction(Request $request, Ingredient $ingredient)
     {
         if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
-            $form = $this->createForm(FormType::class, $ingredient); //nie Ingredient ???
+            $form = $this->createForm(FormType::class, $ingredient);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -260,10 +264,10 @@ class IngredientsController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
         }
-
     }
 }

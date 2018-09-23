@@ -20,6 +20,22 @@
         </div>
     </div>
 
+    {% if filter is defined and filter|length %}
+
+        {#<div class="row">#}
+            {#<div class="col s6">#}
+                {#<h2 class="mdc-typography--headline5">#}
+                {#{% if filter == "ingredient" %}#}
+                    {#With #{{ ingredient.name }}#}
+                {#{% endif %}#}
+                    {#{% if filter == "category"%}#}
+                        {#In category {{ category.name }}#}
+                    {#{% endif %}#}
+                {#</h2>#}
+            {#</div>#}
+        {#</div>#}
+
+    {% else %}
 
 
     <div class="row">
@@ -35,6 +51,7 @@
             </div>
         {% endif %}
     </div>
+    {% endif %}
 
 
 

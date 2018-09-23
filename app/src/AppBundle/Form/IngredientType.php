@@ -64,8 +64,6 @@ class IngredientType extends AbstractType
 //                ],
 //            ]
 //        );
-
-
     }
 
     /**

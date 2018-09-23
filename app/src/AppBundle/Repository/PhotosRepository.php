@@ -9,7 +9,6 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use AppBundle\Entity\Photo;
 
-
 /**
  * Class PhotosRepository.
  *
@@ -47,15 +46,7 @@ class PhotosRepository extends EntityRepository
         return $paginator;
     }
 
-    /**
-     * Query all entities.
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function queryAll()
-    {
-        return $this->createQueryBuilder('photo');
-    }
+
 
     /**
      * Save entity.
@@ -81,5 +72,15 @@ class PhotosRepository extends EntityRepository
     {
         $this->_em->remove($photo);
         $this->_em->flush();
+    }
+
+    /**
+     * Query all entities.
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function queryAll()
+    {
+        return $this->createQueryBuilder('photo');
     }
 }

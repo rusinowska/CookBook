@@ -9,7 +9,6 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use AppBundle\Entity\Ingredient;
 
-
 /**
  * Class IngredientsRepository.
  *
@@ -48,16 +47,6 @@ class IngredientsRepository extends EntityRepository
     }
 
     /**
-     * Query all entities.
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function queryAll()
-    {
-        return $this->createQueryBuilder('ingredient');
-    }
-
-    /**
      * Save entity.
      *
      * @param \AppBundle\Entity\Ingredient $ingredient Ingredient entity
@@ -81,5 +70,15 @@ class IngredientsRepository extends EntityRepository
     {
         $this->_em->remove($ingredient);
         $this->_em->flush();
+    }
+
+    /**
+     * Query all entities.
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function queryAll()
+    {
+        return $this->createQueryBuilder('ingredient');
     }
 }

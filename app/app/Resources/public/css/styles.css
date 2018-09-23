@@ -2,23 +2,61 @@ html, body {
   margin: 0;
   background: #f3f2f2; }
 
-.my-card {
-  height: auto;
-  width: 350px; }
+.full-page {
+  width: 100%;
+  height: 100vh;
+  background-size: cover; }
+
+.full-page-login {
+  background-image: url("https://images.unsplash.com/photo-1491185841098-9ce20f966624?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=f83a8cf7b92564946950e478c9606e4f&auto=format&fit=crop&w=2689&q=80");
+  background-size: 120%; }
+
+.is-center {
+  margin-left: auto;
+  margin-right: auto; }
+
+.content-center {
+  display: flex;
+  flex-direction: row;
+  justify-content: center; }
+
+.content-center-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
 
 .page__main-section {
   margin-left: auto;
   margin-right: auto;
-  max-width: 900px; }
+  max-width: 940px;
+  padding: 1rem; }
+
+.typography-negative {
+  color: #fff; }
+
+.typography-center {
+  text-align: center; }
+
+.my-card {
+  height: auto;
+  width: 350px; }
+
+.mdc-card-form {
+  padding: 1rem 2rem;
+  margin-top: 2rem; }
 
 .cb-card__primary {
-  padding: 1rem; }
+  padding: 1rem 1rem 0 1rem; }
 
 .cb-card__secondary {
-  padding: 1rem; }
+  padding: 0.5rem; }
 
 .mdc-grid-tile {
   --mdc-grid-list-tile-width: 300px; }
+
+nav {
+  color: #fff;
+  background-color: #9ccc65; }
 
 nav a.sidenav-trigger {
   display: block; }
@@ -26,24 +64,58 @@ nav a.sidenav-trigger {
 nav .brand-logo {
   font-size: 1.5rem; }
 
-[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
-  opacity: 1; }
-
-nav {
-  color: #fff;
-  background-color: #9ccc65; }
+.nav-actions-list {
+  margin: 2.8rem 0 1.68rem 0; }
 
 .sidenav .user-view {
   position: relative;
   padding: 84px 32px 32px 32px;
   margin-bottom: 8px; }
 
-.nav-actions-list {
-  margin: 2.8rem 0 1.68rem 0; }
+.pagination li {
+  padding: 5px 5px 0 5px;
+  margin: 0 5px; }
+.pagination li.active {
+  background-color: transparent;
+  color: #6b9b37;
+  font-weight: bold; }
+
+.prev span i,
+.next span i {
+  padding: 0px 5px 0 5px;
+  color: #6b9b37;
+  margin-top: -3px; }
+
+.sr-only {
+  display: none; }
+
+.mdc-button:not(:disabled) {
+  color: #6b9b37; }
 
 .mdc-button--raised:not(:disabled),
 .mdc-button--unelevated:not(:disabled) {
-  background-color: #6b9b37; }
+  background-color: #6b9b37;
+  color: #FFFFFF; }
+
+.mdc-button-back {
+  margin-top: 2rem; }
+
+.form-group {
+  margin-bottom: 24px; }
+
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+  opacity: 1; }
+
+.checkbox label {
+  display: flex;
+  width: auto;
+  min-width: 60px;
+  padding-left: 20px;
+  margin-left: 10px; }
+
+.checkbox label input {
+  margin-left: -20px;
+  margin-top: 3px; }
 
 .category-name {
   margin: 1.8rem 0 0rem 0;
@@ -69,29 +141,27 @@ nav {
 #recipe_ingredients {
   display: flex; }
 
-.checkbox label {
-  display: flex;
-  width: auto;
-  min-width: 60px;
-  padding-left: 20px;
-  margin-left: 10px; }
+.center-full {
+  margin: 20% auto 0 auto; }
 
-.checkbox label input {
-  margin-left: -20px;
-  margin-top: 3px; }
+.photo-button {
+  display: block;
+  margin: 1rem; }
 
-.form-group {
-  margin-bottom: 24px; }
+input[type=file] {
+  background: red; }
 
-.mdc-card-form {
-  padding: 1rem 2rem;
-  margin-top: 2rem; }
+.mdc-snackbar {
+  z-index: 10; }
 
-.mdc-button-back {
-  margin-top: 2rem; }
+.mdc-grid-tile {
+  margin: 6px 0;
+  padding: 0 6px; }
 
-.is-center {
-  margin-left: auto;
-  margin-right: auto; }
+.mdc-chip-set {
+  padding: 0; }
 
-/*# sourceMappingURL=styles.css.map */
+.cb-card__secondary {
+  padding: 0rem 1rem; }
+
+/*# sourceMappingURL=style.css.map */

@@ -8,5 +8,5 @@
 
 {# Bootstrap alert, see http://getbootstrap.com/components/#alerts #}
 <div class="mdc-snackbar mdc-snackbar--align-start alert-{{ type }} mdc-snackbar--active" aria-live="assertive" aria-atomic="true" aria-hidden="true" role="alert" style="display: block;">
-    <div class="mdc-snackbar__text">{{ message }}</div>
+    <div class="mdc-snackbar__text">{{ message|trans }}</div>
 </div>

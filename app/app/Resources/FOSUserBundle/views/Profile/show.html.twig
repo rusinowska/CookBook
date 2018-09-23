@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% block title %}
+    {{ 'profile.show.title'|trans }}
+{% endblock %}
+{% block body %}
+    {% if user is defined and user|length %}
+        {% block fos_user_content %}
+            {% include "@FOSUser/Profile/show_content.html.twig" %}
+        {% endblock fos_user_content %}
+    {% else %}
+        <h2>{{ 'error.please_login'|trans }}</h2>
+    {% endif %}
+{% endblock %}

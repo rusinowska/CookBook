@@ -47,8 +47,8 @@ class CategoriesController extends Controller
     /**
      * CategoriesController constructor.
      *
-     * @param \AppBundle\Repository\CategoriesRepository $categoriesRepository Categories repository
-     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface $authorizationChecker
+     * @param \AppBundle\Repository\CategoriesRepository                                          $categoriesRepository Categories repository
+     * @param \Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface        $authorizationChecker
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorage
      */
     public function __construct(CategoriesRepository $categoriesRepository, AuthorizationCheckerInterface $authorizationChecker, TokenStorageInterface $tokenStorage)
@@ -88,6 +88,7 @@ class CategoriesController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction');
+
             return $response;
         }
     }
@@ -114,6 +115,7 @@ class CategoriesController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction');
+
             return $response;
         }
     }
@@ -135,7 +137,7 @@ class CategoriesController extends Controller
      */
     public function addAction(Request $request)
     {
-        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
             $category = new Category();
             $form = $this->createForm(CategoryType::class, $category);
             $form->handleRequest($request);
@@ -156,8 +158,9 @@ class CategoriesController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
         }
     }
@@ -165,8 +168,8 @@ class CategoriesController extends Controller
     /**
      * Edit action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
-     * @param \AppBundle\Entity\Category                     $category     Category entity
+     * @param \Symfony\Component\HttpFoundation\Request $request  HTTP Request
+     * @param \AppBundle\Entity\Category                $category Category entity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -181,7 +184,7 @@ class CategoriesController extends Controller
      */
     public function editAction(Request $request, Category $category)
     {
-        if ($this->authorizationChecker->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
             $form = $this->createForm(CategoryType::class, $category);
             $form->handleRequest($request);
 
@@ -201,8 +204,9 @@ class CategoriesController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
         }
     }
@@ -210,8 +214,8 @@ class CategoriesController extends Controller
     /**
      * Delete action.
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request HTTP Request
-     * @param \AppBundle\Entity\Category                     $category     Category entity
+     * @param \Symfony\Component\HttpFoundation\Request $request  HTTP Request
+     * @param \AppBundle\Entity\Category                $category Category entity
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response HTTP Response
      *
@@ -227,7 +231,7 @@ class CategoriesController extends Controller
     public function deleteAction(Request $request, Category $category)
     {
         if ($this->authorizationChecker->isGranted('ROLE_SUPER_ADMIN')) {
-            $form = $this->createForm(FormType::class, $category); //nie Category ???
+            $form = $this->createForm(FormType::class, $category);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
@@ -246,8 +250,9 @@ class CategoriesController extends Controller
             );
         } else {
             $response = $this->forward('FOS\UserBundle\Controller\SecurityController::loginAction', array(
-                $request
+                $request,
             ));
+
             return $response;
         }
     }

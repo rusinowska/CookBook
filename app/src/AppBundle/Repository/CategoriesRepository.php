@@ -9,7 +9,6 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use AppBundle\Entity\Category;
 
-
 /**
  * Class CategoriesRepository.
  *
@@ -48,16 +47,6 @@ class CategoriesRepository extends EntityRepository
     }
 
     /**
-     * Query all entities.
-     *
-     * @return \Doctrine\ORM\QueryBuilder
-     */
-    protected function queryAll()
-    {
-        return $this->createQueryBuilder('category');
-    }
-
-    /**
      * Save entity.
      *
      * @param \AppBundle\Entity\Category $category Category entity
@@ -81,5 +70,15 @@ class CategoriesRepository extends EntityRepository
     {
         $this->_em->remove($category);
         $this->_em->flush();
+    }
+
+    /**
+     * Query all entities.
+     *
+     * @return \Doctrine\ORM\QueryBuilder
+     */
+    protected function queryAll()
+    {
+        return $this->createQueryBuilder('category');
     }
 }

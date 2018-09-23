@@ -46,7 +46,7 @@ class PhotoType extends AbstractType
                 'required' => true,
                 'data_class' => null,
                 'attr' => [
-                    'class' => 'mdc-button mdc-button--raised photo-button'],
+                    'class' => 'mdc-button mdc-button--raised photo-button', ],
             ]
         );
     }
